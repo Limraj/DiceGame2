@@ -35,7 +35,6 @@ public class GameFactory {
         GameFlow gameFlow = createDiceFlow();
         //Następnie zasady:
         GameRules rules = createDiceRules(gameFlow);
-
         //Tworzymy grę:
         return new DiceGame.Builder()
                 .rules(rules)
@@ -51,7 +50,6 @@ public class GameFactory {
         //Następnie zasady:
         GameRules rules = createDiceRules(flowGame, dices);
         //Tworzymy grę:
-        
         return new DiceGame.Builder()
                 .rules(rules)
                 .addPlayer("Pierwszy")
