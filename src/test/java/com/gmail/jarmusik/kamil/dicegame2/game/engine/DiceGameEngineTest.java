@@ -46,10 +46,6 @@ public class DiceGameEngineTest {
         
         Integer[] sequenceForDice = {1,2,3,4,5,6,5,6,3,4,1,2,6,3,6,5,4,3,2,1};
         Integer[] sequenceForDice2 ={1,2,6,3,6,5,4,3,2,1,1,2,3,4,5,6,5,6,3,4};
-        
-        List<Dice> dices = new ArrayList<>();
-        dices.add(new DiceCubeOnlyTest(sequenceForDice));
-        dices.add(new DiceCubeOnlyTest(sequenceForDice2));
 
         GameRules rules = DiceGameRules.builder(new DiceGameFlow())
                 .numberOfTurns(5)
