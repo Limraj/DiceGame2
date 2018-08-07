@@ -52,6 +52,7 @@ public class DiceGameEngine implements GameEngine {
         ResultsGame results = gameResultsModifier.toGameResults();
         GamePlayer player = playersRegisterShift.next();
         try {
+            gameResultsModifier.addTurnFor(player);
             logger.startTurnLog(player, results);
             executeFor(player);
             logger.endTurnLog(player, results);
@@ -68,19 +69,14 @@ public class DiceGameEngine implements GameEngine {
     }
     
     private void executeFor(GamePlayer player) throws PlayerHasNotBeenAddedToGameException {
-        gameResultsModifier.addTurnFor(player);
-        
         GameFlow flowGame = rules.getGameFlow();
         int numberOfRollCurrent = 0, pointsRoll;
-        
         do {
-            
             numberOfRollCurrent++;
             pointsRoll = rules.rollOfDices();
             if(debugMode)
                 logger.turnLog(numberOfRollCurrent, pointsRoll, flowGame);
             modifiedResults(flowGame, numberOfRollCurrent, pointsRoll, player);
-            
         } while(!isEndTurn(flowGame, numberOfRollCurrent, pointsRoll));
     }
 
