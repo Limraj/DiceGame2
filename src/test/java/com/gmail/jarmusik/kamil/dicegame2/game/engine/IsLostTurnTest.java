@@ -5,13 +5,13 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.engine;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.DiceGameFlow;
 import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlowFactory;
 
 /**
  *
@@ -46,7 +46,7 @@ public class IsLostTurnTest {
         this.numberOfRollCurrent = numberOfRollCurrent;
         this.pointsRoll = pointsRoll;
         this.expected = expected;
-        this.flow = new DiceGameFlow();
+        this.flow = GameFlowFactory.createFlowGameDice();
                 
     }
 

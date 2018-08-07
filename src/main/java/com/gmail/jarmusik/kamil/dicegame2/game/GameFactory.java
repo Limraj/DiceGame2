@@ -5,36 +5,26 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.DiceGameRules;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.Dice;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.DiceCube;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.action.ActionGame;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.action.AddPoints;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.action.AddPointsMaxPerTurn;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.action.AddWinningTurn;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRulesFactory;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlowFactory;
 
 /**
  *
  * @author Kamil-Tomasz
  */
 public class GameFactory {
+    
     public static Game diceGameTwoPlayersFiveTurnsTenRollsTwoDices() {
         
         //Najpierw tworzymy flow gry:
-        GameFlow gameFlow = createDiceFlow();
+        GameFlow gameFlow = GameFlowFactory.createFlowGameDice();
         //Następnie zasady:
-        GameRules rules = createDiceRules(gameFlow);
+        GameRules rules = GameRulesFactory.createRulesFiveTurnsTenRollsTwoDices(gameFlow);
         //Tworzymy grę:
         return new DiceGame.Builder()
                 .rules(rules)
@@ -46,9 +36,9 @@ public class GameFactory {
     public static Game diceGameFiveTurnsTenRollsTwoDice(List<Dice> dices) {
         
         //Najpierw tworzymy flow gry:
-        GameFlow flowGame = createDiceFlow();
+        GameFlow flowGame = GameFlowFactory.createFlowGameDice();
         //Następnie zasady:
-        GameRules rules = createDiceRules(flowGame, dices);
+        GameRules rules = GameRulesFactory.createRulesFiveTurnsTenRolls(flowGame, dices);
         //Tworzymy grę:
         return new DiceGame.Builder()
                 .rules(rules)
@@ -56,106 +46,5 @@ public class GameFactory {
                 .addPlayer(new DiceGamePlayer("Drugi"))
                 .build();
     }
-    
-    private static GameRules createDiceRules(GameFlow flowGame) {
-        return DiceGameRules.builder(flowGame)
-            //Każdemu graczowi przypada 5 tur
-            .numberOfTurns(5)
-            //W każdej turze, gracz wykonuje maksymalnie 10 rzutów
-            .numberOfRolls(10)
-            //dwoma kośćmi jednocześnie
-            .addDice(new DiceCube())
-            .addDice(new DiceCube())
-            .build();
-    }
-    
-    private static GameRules createDiceRules(GameFlow flowGame, List<Dice> dices) {
-        return DiceGameRules.builder(flowGame)
-            //Każdemu graczowi przypada 5 tur
-            .numberOfTurns(5)
-            //W każdej turze, gracz wykonuje maksymalnie 10 rzutów
-            .numberOfRolls(10)
-            .dices(dices)
-            .build();
-    }
-    
-    private static GameFlow createDiceFlow() {
-        return new GameFlow() {
 
-            @Override
-            public boolean isWonTurn(int numberOfRollCurrent, int pointsRoll) {
-                //Jeżeli w pierwszym rzucie tury gracz uzyska sumę oczek 
-                //z obu kości równą 7 lub 11, lub w dowolnym rzucie 
-                //uzyska sumę oczek z obu kości równą 5, 
-                //wygrywa turę przed czasem
-                return (numberOfRollCurrent == 1 && (pointsRoll == 7 || pointsRoll == 11)) || pointsRoll == 5;
-            }
-
-            @Override
-            public boolean isLostTurn(int numberOfRollCurrent, int pointsRoll) {
-                //Jeżeli gracz w pierwszym rzucie tury uzyska sumę oczek 
-                //z obu kości równą 2 lub 12, przegrywa turę przed czasem
-                return numberOfRollCurrent == 1 && (pointsRoll == 2 || pointsRoll == 12);
-            }
-
-            @Override
-            public BigDecimal pointsScoredPerRoll(int numberOfRollCurrent, int pointsRoll) {
-                //punkty_z_danego_rzutu = suma_oczek_z_rzutu/numer_rzutu
-                //suma_punktów_z_danej_tury = suma_punktów_z_wszystkich_rzutów_z_danej_tury
-                return BigDecimal.valueOf(pointsRoll).divide(BigDecimal.valueOf(numberOfRollCurrent), 2, RoundingMode.HALF_UP);
-            }
-
-            @Override
-            public List<ActionGame> doIfLostTurn(int numberOfRollCurrent, int pointsRoll, GamePlayer playerGame) {
-                //Jeśli przegra turę dodawana jest maksymalna możliwa liczba punktów do końca tury;
-                if(isLostTurn(numberOfRollCurrent, pointsRoll)) {
-                    List<ActionGame> actions = new ArrayList<>();
-                    actions.add(new AddPointsMaxPerTurn(playerGame, numberOfRollCurrent));
-                    return actions;
-                }
-                return Collections.emptyList();
-            }
-
-            @Override
-            public List<ActionGame> doIfWonTurn(int numberOfRollCurrent, int pointsRoll, GamePlayer playerGame) {
-                //Jeśli wygra turę dodawana jest wygrana tura;
-                if(isWonTurn(numberOfRollCurrent, pointsRoll)) {
-                    List<ActionGame> actions = new ArrayList<>();
-                    actions.add(new AddWinningTurn(playerGame));
-                    return actions;
-                }
-                return Collections.emptyList();
-            }
-
-            @Override
-            public List<ActionGame> doIfNotWonAndLostTurn(int numberOfRollCurrent, int pointsRoll, GamePlayer playerGame) {
-                //Jeśli nie wygra ani nie przegra tury to dodawane są punkty obiczane według zasady z punktu 4
-                if(!isWonTurn(numberOfRollCurrent, pointsRoll) && !isLostTurn(numberOfRollCurrent, pointsRoll)) {
-                    List<ActionGame> actions = new ArrayList<>();
-                    actions.add(AddPoints.builder()
-                            .numberOfRollCurrent(numberOfRollCurrent)
-                            .pointsRoll(pointsRoll)
-                            .playerGame(playerGame)
-                            .build());
-                    return actions;
-                }
-                return Collections.emptyList();
-            }
-
-            @Override
-            public RulesOfWinning rulesOfWinning() {
-                //Wygrywa gracz, który zbierze mniejszą liczbę punktów.
-                return () -> (PlayerResult o1, PlayerResult o2) -> {
-                    return o1.getPoints().compareTo(o2.getPoints());
-                };
-            }
-            
-            @Override
-            public boolean isEndTurn(int numberOfRollCurrent, int pointsRoll) {
-                //Koniec tury jeśli przegra albo wygra turę
-                return isLostTurn(numberOfRollCurrent, pointsRoll) 
-                        || isWonTurn(numberOfRollCurrent, pointsRoll);
-            }
-        };
-    }
 }
