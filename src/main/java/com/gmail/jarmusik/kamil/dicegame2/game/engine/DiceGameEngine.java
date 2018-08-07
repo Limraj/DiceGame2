@@ -87,14 +87,18 @@ public class DiceGameEngine implements GameEngine {
 
     private void modifiedResults(GameFlow flowGame, int numberOfRollCurrent, int pointsRoll, GamePlayer player) {
         
-        flowGame.doIfLostTurn(numberOfRollCurrent, pointsRoll, player)
-                .forEach(action -> action.execute(gameResultsModifier.toGameResults(), rules));
+        if(flowGame.isLostTurn(numberOfRollCurrent, pointsRoll))
+            flowGame.doIfLostTurn(numberOfRollCurrent, pointsRoll, player)
+                    .forEach(action -> action.execute(gameResultsModifier.toGameResults(), rules));
         
-        flowGame.doIfWonTurn(numberOfRollCurrent, pointsRoll, player)
-                .forEach(action -> action.execute(gameResultsModifier.toGameResults(), rules));
+        if(flowGame.isWonTurn(numberOfRollCurrent, pointsRoll))
+            flowGame.doIfWonTurn(numberOfRollCurrent, pointsRoll, player)
+                    .forEach(action -> action.execute(gameResultsModifier.toGameResults(), rules));
         
-        flowGame.doIfNotWonAndLostTurn(numberOfRollCurrent, pointsRoll, player)
-                .forEach(action -> action.execute(gameResultsModifier.toGameResults(), rules));
+        if(!flowGame.isLostTurn(numberOfRollCurrent, pointsRoll) 
+                && !flowGame.isWonTurn(numberOfRollCurrent, pointsRoll))
+            flowGame.doIfNotWonAndLostTurn(numberOfRollCurrent, pointsRoll, player)
+                    .forEach(action -> action.execute(gameResultsModifier.toGameResults(), rules));
         
     }
 

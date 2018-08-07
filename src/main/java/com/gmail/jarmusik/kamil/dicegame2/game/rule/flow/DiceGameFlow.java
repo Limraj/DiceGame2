@@ -14,7 +14,6 @@ import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.action.AddWinningTurn;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 
@@ -22,7 +21,7 @@ import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
  *
  * @author Kamil-Tomasz
  */
-public class DiceGameFlow implements GameFlow {
+class DiceGameFlow implements GameFlow {
 
     @Override
     public boolean isWonTurn(int numberOfRollCurrent, int pointsRoll) {
@@ -50,38 +49,29 @@ public class DiceGameFlow implements GameFlow {
     @Override
     public List<ActionGame> doIfLostTurn(int numberOfRollCurrent, int pointsRoll, GamePlayer playerGame) {
         //Jeśli przegra turę dodawana jest maksymalna możliwa liczba punktów do końca tury;
-        if(isLostTurn(numberOfRollCurrent, pointsRoll)) {
-            List<ActionGame> actions = new ArrayList<>();
-            actions.add(new AddPointsMaxPerTurn(playerGame, numberOfRollCurrent));
-            return actions;
-        }
-        return Collections.emptyList();
+        List<ActionGame> actions = new ArrayList<>();
+        actions.add(new AddPointsMaxPerTurn(playerGame, numberOfRollCurrent));
+        return actions;
     }
 
     @Override
     public List<ActionGame> doIfWonTurn(int numberOfRollCurrent, int pointsRoll, GamePlayer playerGame) {
         //Jeśli wygra turę dodawana jest wygrana tura;
-        if(isWonTurn(numberOfRollCurrent, pointsRoll)) {
-            List<ActionGame> actions = new ArrayList<>();
-            actions.add(new AddWinningTurn(playerGame));
-            return actions;
-        }
-        return Collections.emptyList();
+        List<ActionGame> actions = new ArrayList<>();
+        actions.add(new AddWinningTurn(playerGame));
+        return actions;
     }
 
     @Override
     public List<ActionGame> doIfNotWonAndLostTurn(int numberOfRollCurrent, int pointsRoll, GamePlayer playerGame) {
         //Jeśli nie wygra ani nie przegra tury to dodawane są punkty obiczane według zasady z punktu 4
-        if(!isWonTurn(numberOfRollCurrent, pointsRoll) && !isLostTurn(numberOfRollCurrent, pointsRoll)) {
-            List<ActionGame> actions = new ArrayList<>();
-            actions.add(AddPoints.builder()
-                    .numberOfRollCurrent(numberOfRollCurrent)
-                    .pointsRoll(pointsRoll)
-                    .playerGame(playerGame)
-                    .build());
-            return actions;
-        }
-        return Collections.emptyList();
+        List<ActionGame> actions = new ArrayList<>();
+        actions.add(AddPoints.builder()
+                .numberOfRollCurrent(numberOfRollCurrent)
+                .pointsRoll(pointsRoll)
+                .playerGame(playerGame)
+                .build());
+        return actions;
     }
 
     @Override

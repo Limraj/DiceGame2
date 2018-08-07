@@ -10,7 +10,6 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.GameEngine;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.NumberOfTurnsHasExceededException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.ResultsGame;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.DiceGameRules;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -10,10 +10,8 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.PlayerHasNotBeen
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.ResultsGame;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.DiceGameRules;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.Dice;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.DiceCubeOnlyTest;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.DiceGameFlow;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -24,6 +22,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRulesFactory;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlowFactory;
 
 /**
  *
@@ -46,14 +47,12 @@ public class DiceGameEngineTest {
         
         Integer[] sequenceForDice = {1,2,3,4,5,6,5,6,3,4,1,2,6,3,6,5,4,3,2,1};
         Integer[] sequenceForDice2 ={1,2,6,3,6,5,4,3,2,1,1,2,3,4,5,6,5,6,3,4};
-
-        GameRules rules = DiceGameRules.builder(new DiceGameFlow())
-                .numberOfTurns(5)
-                .numberOfRolls(10)
-                .addDice(new DiceCubeOnlyTest(sequenceForDice))
-                .addDice(new DiceCubeOnlyTest(sequenceForDice2))
-                .build();
-
+        List<Dice> dices = new ArrayList<>();
+        dices.add(new DiceCubeOnlyTest(sequenceForDice));
+        dices.add(new DiceCubeOnlyTest(sequenceForDice2));
+        
+        GameFlow flow = GameFlowFactory.createFlowGameDice();
+        GameRules rules = GameRulesFactory.createRulesFiveTurnsTenRolls(flow, dices);
         engine = new DiceGameEngine(players, rules);
         engine.debugMode(true);
     }

@@ -19,7 +19,7 @@ import lombok.Getter;
  * @author Kamil-Tomasz
  */
 @Builder
-public class DiceGameRules implements GameRules {
+class DiceGameRules implements GameRules {
     
     @Singular(value = "addDice") private final List<Dice> dices;
     @Getter private final int numberOfTurns;

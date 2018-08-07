@@ -5,14 +5,8 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.DiceGame;
 import com.gmail.jarmusik.kamil.dicegame2.game.Game;
 import com.gmail.jarmusik.kamil.dicegame2.game.GameFactory;
-import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.DiceGameRules;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.DiceGameFlow;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
 
 /**
  *
