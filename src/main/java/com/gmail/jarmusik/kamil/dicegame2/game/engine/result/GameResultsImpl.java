@@ -63,11 +63,6 @@ class GameResultsImpl implements GameResults {
         System.out.println("Winner: " + getLeader());
         System.out.println("-----------------\n");
     }
-
-    @Override
-    public boolean containsGamePlayer(GamePlayer gamePlayer) {
-        return this.results.containsKey(gamePlayer) && this.resultsForNames.containsKey(gamePlayer.getName());
-    }
     
     private void throwIfPlayerHasNotBeenAddedToGame(GamePlayer player) throws PlayerHasNotBeenAddedToGameException {
         if(!results.containsKey(player))

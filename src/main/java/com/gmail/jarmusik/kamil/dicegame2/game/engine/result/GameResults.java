@@ -19,5 +19,4 @@ public interface GameResults {
     GamePlayer getLeader();
     List<GamePlayer> getPeleton();
     void printResults();
-    boolean containsGamePlayer(GamePlayer gamePlayer);
 }
