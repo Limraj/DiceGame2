@@ -5,13 +5,13 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.action;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.ResultsGame;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
 
 /**
  *
  * @author Kamil-Tomasz
  */
 public interface ActionGame {
-    boolean execute(ResultsGame resultsGame, GameRules rulesGame);
+    boolean execute(GameResultsModifier modifier, GameRules rulesGame);
 }

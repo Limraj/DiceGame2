@@ -19,19 +19,18 @@ import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
  */
 public class Verdict {
     
-    static GamePlayer determineLeader(Map<GamePlayer, PlayerResultModifier> modifiers, RulesOfWinning rulesOfWinning) {
+    static GamePlayer determineLeader(Map<GamePlayer, PlayerResult> modifiers, RulesOfWinning rulesOfWinning) {
         return determinePeleton(modifiers, rulesOfWinning).get(0);
     }
     
-    static List<GamePlayer> determinePeleton(Map<GamePlayer, PlayerResultModifier> modifiers, RulesOfWinning rulesOfWinning) {
+    static List<GamePlayer> determinePeleton(Map<GamePlayer, PlayerResult> modifiers, RulesOfWinning rulesOfWinning) {
         List<GamePlayer> sorted = SortMap.sortByValueToKeyList(toMapPlayerResult(modifiers), rulesOfWinning.getRules());
-        //System.out.println("Sorted: " + sorted);
         return Collections.unmodifiableList(sorted);
     }
     
-    private static Map<GamePlayer, PlayerResult> toMapPlayerResult(Map<GamePlayer, PlayerResultModifier> modifiers) {
+    private static Map<GamePlayer, PlayerResult> toMapPlayerResult(Map<GamePlayer, PlayerResult> modifiers) {
         return modifiers.entrySet().stream().collect(Collectors.toMap(entry -> entry.getKey(), entry -> {
-            return entry.getValue().toPlayerResult();
+            return entry.getValue();
         }));
     } 
 }

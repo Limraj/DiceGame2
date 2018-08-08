@@ -8,7 +8,6 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.NumberOfTurnsHasExceededException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.PlayerHasNotBeenAddedToGameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.ResultsGame;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.Dice;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.DiceCubeOnlyTest;
@@ -25,6 +24,7 @@ import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRulesFactory;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlowFactory;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
 
 /**
  *
@@ -63,18 +63,18 @@ public class DiceGameEngineTest {
         //When
         
         //Then
-        ResultsGame results = engine.getGameResults();
+        GameResults results = engine.getGameResults();
         PlayerResult result1 = results.getPlayerResultFor(player1);
         PlayerResult result2 = results.getPlayerResultFor(player2);
         
         assertEquals(BigDecimal.valueOf(0), result1.getPoints());
         assertEquals(BigDecimal.valueOf(0), result2.getPoints());
         
-        assertEquals(0, result1.getCurrentTurnNumber());
-        assertEquals(0, result2.getCurrentTurnNumber());
+        assertEquals(0, result1.getNumberTurnCurrent());
+        assertEquals(0, result2.getNumberTurnCurrent());
         
-        assertEquals(0, result1.getNumberOfWinningTurns());
-        assertEquals(0, result2.getNumberOfWinningTurns());
+        assertEquals(0, result1.getNumberWinningTurns());
+        assertEquals(0, result2.getNumberWinningTurns());
     }
     
     @Test
@@ -85,18 +85,18 @@ public class DiceGameEngineTest {
         engine.nextTurn();
         
         //Then
-        ResultsGame results = engine.getGameResults();
+        GameResults results = engine.getGameResults();
         PlayerResult result1 = results.getPlayerResultFor(player1);
         PlayerResult result2 = results.getPlayerResultFor(player2);
         
         assertEquals(BigDecimal.valueOf(35.14), result1.getPoints());
         assertEquals(BigDecimal.valueOf(18.57), result2.getPoints());
         
-        assertEquals(1, result1.getCurrentTurnNumber());
-        assertEquals(1, result2.getCurrentTurnNumber());
+        assertEquals(1, result1.getNumberTurnCurrent());
+        assertEquals(1, result2.getNumberTurnCurrent());
         
-        assertEquals(0, result1.getNumberOfWinningTurns());
-        assertEquals(1, result2.getNumberOfWinningTurns());
+        assertEquals(0, result1.getNumberWinningTurns());
+        assertEquals(1, result2.getNumberWinningTurns());
         
         assertEquals(player2, results.getLeader());
     }
@@ -108,18 +108,18 @@ public class DiceGameEngineTest {
         engine.nextTurn();
         
         //Then
-        ResultsGame results = engine.getGameResults();
+        GameResults results = engine.getGameResults();
         PlayerResult result1 = results.getPlayerResultFor(player1);
         PlayerResult result2 = results.getPlayerResultFor(player2);
         
         assertEquals(BigDecimal.valueOf(35.14), result1.getPoints());
         assertEquals(BigDecimal.valueOf(53.71), result2.getPoints());
         
-        assertEquals(2, result1.getCurrentTurnNumber());
-        assertEquals(2, result2.getCurrentTurnNumber());
+        assertEquals(2, result1.getNumberTurnCurrent());
+        assertEquals(2, result2.getNumberTurnCurrent());
         
-        assertEquals(1, result1.getNumberOfWinningTurns());
-        assertEquals(1, result2.getNumberOfWinningTurns());
+        assertEquals(1, result1.getNumberWinningTurns());
+        assertEquals(1, result2.getNumberWinningTurns());
         
         assertEquals(player1, results.getLeader());
     }
@@ -131,18 +131,18 @@ public class DiceGameEngineTest {
         engine.nextTurn();
         
         //Then
-        ResultsGame results = engine.getGameResults();
+        GameResults results = engine.getGameResults();
         PlayerResult result1 = results.getPlayerResultFor(player1);
         PlayerResult result2 = results.getPlayerResultFor(player2);
         
         assertEquals(BigDecimal.valueOf(53.71), result1.getPoints());
         assertEquals(BigDecimal.valueOf(53.71), result2.getPoints());
         
-        assertEquals(3, result1.getCurrentTurnNumber());
-        assertEquals(3, result2.getCurrentTurnNumber());
+        assertEquals(3, result1.getNumberTurnCurrent());
+        assertEquals(3, result2.getNumberTurnCurrent());
         
-        assertEquals(2, result1.getNumberOfWinningTurns());
-        assertEquals(2, result2.getNumberOfWinningTurns());
+        assertEquals(2, result1.getNumberWinningTurns());
+        assertEquals(2, result2.getNumberWinningTurns());
         //oboje mają tyle samo punktów;
         //Assert.assertEquals(player2, results.getLeader());
     }
@@ -154,18 +154,18 @@ public class DiceGameEngineTest {
         engine.nextTurn();
         
         //Then
-        ResultsGame results = engine.getGameResults();
+        GameResults results = engine.getGameResults();
         PlayerResult result1 = results.getPlayerResultFor(player1);
         PlayerResult result2 = results.getPlayerResultFor(player2);
         
         assertEquals(BigDecimal.valueOf(88.85), result1.getPoints());
         assertEquals(BigDecimal.valueOf(72.28), result2.getPoints());
         
-        assertEquals(4, result1.getCurrentTurnNumber());
-        assertEquals(4, result2.getCurrentTurnNumber());
+        assertEquals(4, result1.getNumberTurnCurrent());
+        assertEquals(4, result2.getNumberTurnCurrent());
         
-        assertEquals(2, result1.getNumberOfWinningTurns());
-        assertEquals(3, result2.getNumberOfWinningTurns());
+        assertEquals(2, result1.getNumberWinningTurns());
+        assertEquals(3, result2.getNumberWinningTurns());
         
         assertEquals(player2, results.getLeader());
     }
@@ -177,18 +177,18 @@ public class DiceGameEngineTest {
         engine.nextTurn();
         
         //Then
-        ResultsGame results = engine.getGameResults();
+        GameResults results = engine.getGameResults();
         PlayerResult result1 = results.getPlayerResultFor(player1);
         PlayerResult result2 = results.getPlayerResultFor(player2);
         
         assertEquals(BigDecimal.valueOf(88.85), result1.getPoints());
         assertEquals(BigDecimal.valueOf(107.42), result2.getPoints());
         
-        assertEquals(5, result1.getCurrentTurnNumber());
-        assertEquals(5, result2.getCurrentTurnNumber());
+        assertEquals(5, result1.getNumberTurnCurrent());
+        assertEquals(5, result2.getNumberTurnCurrent());
         
-        assertEquals(3, result1.getNumberOfWinningTurns());
-        assertEquals(3, result2.getNumberOfWinningTurns());
+        assertEquals(3, result1.getNumberWinningTurns());
+        assertEquals(3, result2.getNumberWinningTurns());
         
         assertEquals(player1, results.getLeader());
     }
