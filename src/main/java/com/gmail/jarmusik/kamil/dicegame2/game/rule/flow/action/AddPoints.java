@@ -21,13 +21,13 @@ import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
 public class AddPoints implements ActionGame {
     
     private final GamePlayer playerGame;
-    private final int numberOfRollCurrent;
+    private final int numberRollCurrent;
     private final int pointsRoll;
     
     @Override
     public boolean execute(GameResultsModifier modifier, GameRules rulesGame) {
         try {
-            return modifier.addPointsFor(playerGame, rulesGame.getGameFlow().pointsScoredPerRoll(numberOfRollCurrent, pointsRoll));
+            return modifier.addPointsFor(playerGame, rulesGame.getGameFlow().pointsScoredPerRoll(numberRollCurrent, pointsRoll));
         } catch (PlayerHasNotBeenAddedToGameException ex) {
             Logger.getLogger(AddPoints.class.getName()).log(Level.SEVERE, null, ex);
             return false;
