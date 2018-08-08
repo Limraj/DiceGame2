@@ -12,9 +12,9 @@ import java.math.BigDecimal;
  * @author Kamil-Tomasz
  */
 interface PlayerResultModifier {
-    void addPoints(BigDecimal points);
-    void addWinningTurn(int turn);
-    void addTurn();
-    void reset();
+    boolean addPoints(BigDecimal points);
+    boolean reset();
+    int incrementAndGetNumberWinningTurns();
+    int incrementAndGetNumberTurnCurrent();
     PlayerResult toPlayerResult();
 }

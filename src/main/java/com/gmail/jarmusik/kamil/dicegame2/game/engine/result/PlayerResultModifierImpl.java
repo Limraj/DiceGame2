@@ -6,8 +6,6 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.result;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  *
@@ -15,40 +13,48 @@ import java.util.Set;
  */
 class PlayerResultModifierImpl implements PlayerResultModifier {
 
-    private final Set<Integer> winningTurns;
+    private int numberWinningTurns;
     private BigDecimal points;
-    private int numberOfTurnCurrent;
+    private int numberTurnCurrent;
 
     public PlayerResultModifierImpl() {
-        winningTurns = new HashSet<>();
+        numberWinningTurns = 0;
         points = BigDecimal.ZERO;
-        numberOfTurnCurrent = 0;
+        numberTurnCurrent = 0;
+    }
+    
+    public PlayerResultModifierImpl(PlayerResult playerResult) {
+        numberWinningTurns = playerResult.getNumberWinningTurns();
+        points = playerResult.getPoints();
+        numberTurnCurrent = playerResult.getNumberTurnCurrent();
     }
 
     @Override
-    public void addPoints(BigDecimal points) {
+    public boolean addPoints(BigDecimal points) {
         this.points = this.points.add(points);
+        return true;
     }
     
     @Override
-    public void addTurn() {
-        numberOfTurnCurrent++;
+    public int incrementAndGetNumberTurnCurrent() {
+        return ++numberTurnCurrent;
     }
 
     @Override
     public PlayerResult toPlayerResult() {
-        return new PlayerResultImpl(numberOfTurnCurrent, points, winningTurns.size());
+        return new PlayerResultImpl(numberTurnCurrent, points, numberWinningTurns);
     }
 
     @Override
-    public void reset() {
-        this.numberOfTurnCurrent = 0;
-        this.winningTurns.clear();
+    public boolean reset() {
+        this.numberTurnCurrent = 0;
+        this.numberWinningTurns = 0;
         this.points = BigDecimal.ZERO;
+        return true;
     }
 
     @Override
-    public void addWinningTurn(int turn) {
-        winningTurns.add(turn);
+    public int incrementAndGetNumberWinningTurns() {
+        return ++numberWinningTurns;
     }
 }

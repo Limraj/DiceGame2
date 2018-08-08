@@ -9,7 +9,7 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.action.ActionGame;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.action.AddPoints;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.action.AddPointsMaxPerTurn;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.action.AddPointsMaxToEndTurn;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.action.AddWinningTurn;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -50,7 +50,7 @@ class DiceGameFlow implements GameFlow {
     public List<ActionGame> doIfLostTurn(int numberOfRollCurrent, int pointsRoll, GamePlayer playerGame) {
         //Jeśli przegra turę dodawana jest maksymalna możliwa liczba punktów do końca tury;
         List<ActionGame> actions = new ArrayList<>();
-        actions.add(new AddPointsMaxPerTurn(playerGame, numberOfRollCurrent));
+        actions.add(new AddPointsMaxToEndTurn(playerGame, numberOfRollCurrent));
         return actions;
     }
 

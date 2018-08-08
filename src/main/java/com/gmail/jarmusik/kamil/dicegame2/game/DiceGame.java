@@ -8,7 +8,6 @@ package com.gmail.jarmusik.kamil.dicegame2.game;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.DiceGameEngine;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.GameEngine;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.NumberOfTurnsHasExceededException;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.ResultsGame;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
 
 import java.util.logging.Level;
@@ -17,6 +16,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
 
 /**
  *
@@ -92,7 +92,7 @@ public class DiceGame implements Game {
     }
     
     @Override
-    public ResultsGame getGameResults() {
+    public GameResults getGameResults() {
         return engine.getGameResults();
     }
 

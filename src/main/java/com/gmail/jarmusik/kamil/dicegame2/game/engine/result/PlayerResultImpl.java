@@ -6,55 +6,36 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.result;
 
 import java.math.BigDecimal;
+import lombok.Getter;
 
 /**
  *
  * @author Kamil-Tomasz
  */
+@Getter
 class PlayerResultImpl implements PlayerResult {
     
     private final BigDecimal points;
-    private final int numberOfWinningTurns;
-    private final int currentTurnNumber;
+    private final int numberWinningTurns;
+    private final int numberTurnCurrent;
     private final boolean empty;
-    public static PlayerResultImpl INSTANCE_EMPTY = new PlayerResultImpl();
-
-    public PlayerResultImpl(int currentTurnNumber, BigDecimal points, int numberOfWinningTurns) {
-        this.currentTurnNumber = currentTurnNumber;
+    
+    public PlayerResultImpl(int numberTurnCurrent, BigDecimal points, int numberWinningTurns) {
+        this.numberTurnCurrent = numberTurnCurrent;
         this.points = points;
-        this.numberOfWinningTurns = numberOfWinningTurns;
+        this.numberWinningTurns = numberWinningTurns;
         this.empty = false;
     }
     
     private PlayerResultImpl() {
-        this.currentTurnNumber = 0;
+        this.numberTurnCurrent = 0;
         this.points = BigDecimal.ZERO;
-        this.numberOfWinningTurns = 0;
+        this.numberWinningTurns = 0;
         this.empty = true;
-    }
-
-    @Override
-    public BigDecimal getPoints() {
-        return points;
     }
     
     @Override
     public boolean isEmpty() {
         return empty;
-    }
-
-    @Override
-    public int getNumberOfWinningTurns() {
-        return numberOfWinningTurns;
-    }
-
-    @Override
-    public int getCurrentTurnNumber() {
-        return currentTurnNumber;
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "{" + "points=" + points + ", numberOfWinningTurns=" + numberOfWinningTurns + '}';
     }
 }

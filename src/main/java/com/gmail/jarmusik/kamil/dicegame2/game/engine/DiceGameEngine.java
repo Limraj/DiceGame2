@@ -6,7 +6,6 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.log.TurnLoggable;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.log.TurnLogger;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifierImpl;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.ResultsGame;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.PlayersShiftRegister;
 import com.gmail.jarmusik.kamil.dicegame2.util.IterableShift;
 import java.util.logging.Level;
@@ -15,6 +14,7 @@ import java.util.Set;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -37,7 +37,7 @@ public class DiceGameEngine implements GameEngine {
 
     public DiceGameEngine(Set<GamePlayer> players, GameRules rules) {
         System.out.print("Load engine...");
-        this.gameResultsModifier = new GameResultsModifierImpl(players, rules.getGameFlow().rulesOfWinning());
+        this.gameResultsModifier = new GameResultsModifierImpl(players);
         this.rules = rules;
         this.totalNumberOfTurns = 0;
         this.playersRegisterShift = new PlayersShiftRegister(players);
@@ -49,7 +49,7 @@ public class DiceGameEngine implements GameEngine {
     @Override
     public GameEngine nextTurn() throws NumberOfTurnsHasExceededException {
         checkHasNextTurnAndIterate();
-        ResultsGame results = gameResultsModifier.toGameResults();
+        GameResults results = gameResultsModifier.toGameResults(rules.getGameFlow().rulesOfWinning());
         GamePlayer player = playersRegisterShift.next();
         try {
             gameResultsModifier.addTurnFor(player);
@@ -89,16 +89,16 @@ public class DiceGameEngine implements GameEngine {
         
         if(flowGame.isLostTurn(numberOfRollCurrent, pointsRoll))
             flowGame.doIfLostTurn(numberOfRollCurrent, pointsRoll, player)
-                    .forEach(action -> action.execute(gameResultsModifier.toGameResults(), rules));
+                    .forEach(action -> action.execute(gameResultsModifier, rules));
         
         if(flowGame.isWonTurn(numberOfRollCurrent, pointsRoll))
             flowGame.doIfWonTurn(numberOfRollCurrent, pointsRoll, player)
-                    .forEach(action -> action.execute(gameResultsModifier.toGameResults(), rules));
+                    .forEach(action -> action.execute(gameResultsModifier, rules));
         
         if(!flowGame.isLostTurn(numberOfRollCurrent, pointsRoll) 
                 && !flowGame.isWonTurn(numberOfRollCurrent, pointsRoll))
             flowGame.doIfNotWonAndLostTurn(numberOfRollCurrent, pointsRoll, player)
-                    .forEach(action -> action.execute(gameResultsModifier.toGameResults(), rules));
+                    .forEach(action -> action.execute(gameResultsModifier, rules));
         
     }
 
@@ -120,8 +120,8 @@ public class DiceGameEngine implements GameEngine {
     }
 
     @Override
-    public ResultsGame getGameResults() {
-        return gameResultsModifier.toGameResults();
+    public GameResults getGameResults() {
+        return gameResultsModifier.toGameResults(rules.getGameFlow().rulesOfWinning());
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.util.List;
  * @author Kamil-Tomasz
  */
 public class GameRulesFactory {
-        public static GameRules createRulesFiveTurnsTenRollsTwoDices(GameFlow flowGame) {
+    public static GameRules createRulesFiveTurnsTenRollsTwoDices(GameFlow flowGame) {
         return DiceGameRules.builder(flowGame)
             //Każdemu graczowi przypada 5 tur
             .numberOfTurns(5)

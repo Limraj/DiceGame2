@@ -5,7 +5,7 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.ResultsGame;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
 
 /**
  *
@@ -15,5 +15,5 @@ public interface Game {
     void start();
     void printResults();
     void debugMode(boolean debug);
-    ResultsGame getGameResults();
+    GameResults getGameResults();
 }
