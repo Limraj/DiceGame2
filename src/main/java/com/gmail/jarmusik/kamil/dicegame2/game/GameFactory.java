@@ -25,7 +25,6 @@ public class GameFactory {
         GameFlow gameFlow = GameFlowFactory.createFlowGameDice();
         //Następnie zasady:
         GameRules rules = GameRulesFactory.createRulesFiveTurnsTenRollsTwoDices(gameFlow);
-
         //Tworzymy grę:
         return new DiceGame.Builder()
                 .rules(rules)
@@ -41,7 +40,6 @@ public class GameFactory {
         //Następnie zasady:
         GameRules rules = GameRulesFactory.createRulesFiveTurnsTenRolls(flowGame, dices);
         //Tworzymy grę:
-        
         return new DiceGame.Builder()
                 .rules(rules)
                 .addPlayer("Pierwszy")
