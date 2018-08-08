@@ -24,38 +24,38 @@ import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 class DiceGameFlow implements GameFlow {
 
     @Override
-    public boolean isWonTurn(int numberOfRollCurrent, int pointsRoll) {
+    public boolean isWonTurn(int numberRollCurrent, int pointsRoll) {
         //Jeżeli w pierwszym rzucie tury gracz uzyska sumę oczek 
         //z obu kości równą 7 lub 11, lub w dowolnym rzucie 
         //uzyska sumę oczek z obu kości równą 5, 
         //wygrywa turę przed czasem;
-        return (numberOfRollCurrent == 1 && (pointsRoll == 7 || pointsRoll == 11)) || pointsRoll == 5;
+        return (numberRollCurrent == 1 && (pointsRoll == 7 || pointsRoll == 11)) || pointsRoll == 5;
     }
 
     @Override
-    public boolean isLostTurn(int numberOfRollCurrent, int pointsRoll) {
+    public boolean isLostTurn(int numberRollCurrent, int pointsRoll) {
         //Jeżeli gracz w pierwszym rzucie tury uzyska sumę oczek 
         //z obu kości równą 2 lub 12, przegrywa turę przed czasem;
-        return numberOfRollCurrent == 1 && (pointsRoll == 2 || pointsRoll == 12);
+        return numberRollCurrent == 1 && (pointsRoll == 2 || pointsRoll == 12);
     }
 
     @Override
-    public BigDecimal pointsScoredPerRoll(int numberOfRollCurrent, int pointsRoll) {
+    public BigDecimal pointsScoredPerRoll(int numberRollCurrent, int pointsRoll) {
         //punkty_z_danego_rzutu = suma_oczek_z_rzutu/numer_rzutu;
         //suma_punktów_z_danej_tury = suma_punktów_z_wszystkich_rzutów_z_danej_tury;
-        return BigDecimal.valueOf(pointsRoll).divide(BigDecimal.valueOf(numberOfRollCurrent), 2, RoundingMode.HALF_UP);
+        return BigDecimal.valueOf(pointsRoll).divide(BigDecimal.valueOf(numberRollCurrent), 2, RoundingMode.HALF_UP);
     }
 
     @Override
-    public List<ActionGame> doIfLostTurn(int numberOfRollCurrent, int pointsRoll, GamePlayer playerGame) {
+    public List<ActionGame> doIfLostTurn(int numberRollCurrent, int pointsRoll, GamePlayer playerGame) {
         //Jeśli przegra turę dodawana jest maksymalna możliwa liczba punktów do końca tury;
         List<ActionGame> actions = new ArrayList<>();
-        actions.add(new AddPointsMaxToEndTurn(playerGame, numberOfRollCurrent));
+        actions.add(new AddPointsMaxToEndTurn(playerGame, numberRollCurrent));
         return actions;
     }
 
     @Override
-    public List<ActionGame> doIfWonTurn(int numberOfRollCurrent, int pointsRoll, GamePlayer playerGame) {
+    public List<ActionGame> doIfWonTurn(int numberRollCurrent, int pointsRoll, GamePlayer playerGame) {
         //Jeśli wygra turę dodawana jest wygrana tura;
         List<ActionGame> actions = new ArrayList<>();
         actions.add(new AddWinningTurn(playerGame));
@@ -63,11 +63,11 @@ class DiceGameFlow implements GameFlow {
     }
 
     @Override
-    public List<ActionGame> doIfNotWonAndLostTurn(int numberOfRollCurrent, int pointsRoll, GamePlayer playerGame) {
+    public List<ActionGame> doIfNotWonAndLostTurn(int numberRollCurrent, int pointsRoll, GamePlayer playerGame) {
         //Jeśli nie wygra ani nie przegra tury to dodawane są punkty obiczane według zasady z punktu 4
         List<ActionGame> actions = new ArrayList<>();
         actions.add(AddPoints.builder()
-                .numberOfRollCurrent(numberOfRollCurrent)
+                .numberRollCurrent(numberRollCurrent)
                 .pointsRoll(pointsRoll)
                 .playerGame(playerGame)
                 .build());
@@ -83,9 +83,9 @@ class DiceGameFlow implements GameFlow {
     }
 
     @Override
-    public boolean isEndTurn(int numberOfRollCurrent, int pointsRoll) {
+    public boolean isEndTurn(int numberRollCurrent, int pointsRoll) {
         //Jeśli przegra, albo wygra turę to koniec tury;
-        return isLostTurn(numberOfRollCurrent, pointsRoll) 
-                || isWonTurn(numberOfRollCurrent, pointsRoll);
+        return isLostTurn(numberRollCurrent, pointsRoll) 
+                || isWonTurn(numberRollCurrent, pointsRoll);
     }
 }

@@ -19,17 +19,17 @@ import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
 public class AddPointsMaxToEndTurn implements ActionGame {
     
     private final GamePlayer player;
-    private final int numberOfRollCurrent;
+    private final int numberRollCurrent;
 
-    public AddPointsMaxToEndTurn(GamePlayer player, int numberOfRollCurrent) {
+    public AddPointsMaxToEndTurn(GamePlayer player, int numberRollCurrent) {
         this.player = player;
-        this.numberOfRollCurrent = numberOfRollCurrent;
+        this.numberRollCurrent = numberRollCurrent;
     }
 
     @Override
     public boolean execute(GameResultsModifier modifier, GameRules rulesGame) {
         try {
-            return modifier.addPointsFor(player, rulesGame.maxPointsToEndTurn(numberOfRollCurrent));
+            return modifier.addPointsFor(player, rulesGame.maxPointsToEndTurn(numberRollCurrent));
         } catch (PlayerHasNotBeenAddedToGameException ex) {
             Logger.getLogger(AddPoints.class.getName()).log(Level.SEVERE, null, ex);
             return false;
