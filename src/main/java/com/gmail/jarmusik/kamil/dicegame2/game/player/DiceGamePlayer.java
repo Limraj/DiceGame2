@@ -5,50 +5,23 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.player;
 
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  *
  * @author Kamil-Tomasz
  */
+@Getter
+@ToString
+@EqualsAndHashCode
 public class DiceGamePlayer implements GamePlayer {
     
-    String name;
+    private final String name;
 
     public DiceGamePlayer(String name) {
         this.name = name;
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 19 * hash + Objects.hashCode(this.name);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final DiceGamePlayer other = (DiceGamePlayer) obj;
-        
-        return Objects.equals(this.name, other.name);
-    }
-    
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "{" + "name=" + name + '}';
-    }
 }

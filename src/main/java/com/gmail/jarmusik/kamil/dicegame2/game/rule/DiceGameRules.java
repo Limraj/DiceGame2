@@ -22,8 +22,8 @@ import lombok.Getter;
 class DiceGameRules implements GameRules {
     
     @Singular(value = "addDice") private final List<Dice> dices;
-    @Getter private final int numberOfTurns;
-    @Getter private final int numberOfRolls;
+    @Getter private final int numberTurns;
+    @Getter private final int numberRolls;
     @Getter @NonNull private final GameFlow gameFlow;
     
     public static DiceGameRulesBuilder builder(GameFlow gameFlow) {
@@ -31,26 +31,26 @@ class DiceGameRules implements GameRules {
     }
 
     @Override
-    public int rollOfDices() {
+    public int rollDices() {
         return dices.stream().mapToInt((dice) -> dice.roll()).sum();
     }
 
     @Override
-    public int numberOfDices() {
+    public int numberDices() {
         return dices.size();
     }
 
     @Override
-    public int maxNumberOfMeshesPerRoll() {
+    public int maxNumberMeshesForAllDices() {
         return dices.stream().mapToInt(a -> a.maxMeshes()).sum();
     }
 
     @Override
     public BigDecimal maxPointsToEndTurn(int numberOfRollCurrent) {
         BigDecimal accumulator = BigDecimal.ZERO;
-        int maxNumberOfMeshesPerRoll = maxNumberOfMeshesPerRoll();
-        for (int i = numberOfRollCurrent; i < getNumberOfRolls() + 1; i++)
-            accumulator = accumulator.add(gameFlow.pointsScoredPerRoll(i, maxNumberOfMeshesPerRoll));
+        int maxNumberMeshesForAllDices = maxNumberMeshesForAllDices();
+        for (int i = numberOfRollCurrent; i < getNumberRolls() + 1; i++)
+            accumulator = accumulator.add(gameFlow.pointsScoredPerRoll(i, maxNumberMeshesForAllDices));
         return accumulator;
     }
 }

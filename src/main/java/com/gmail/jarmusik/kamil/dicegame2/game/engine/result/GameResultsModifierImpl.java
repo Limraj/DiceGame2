@@ -13,12 +13,13 @@ import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import lombok.extern.java.Log;
 
 /**
  *
  * @author Kamil-Tomasz
  */
+@Log
 public final class GameResultsModifierImpl implements GameResultsModifier {
     
     private final Map<GamePlayer, PlayerResultModifier> modifiers = new LinkedHashMap<>();
@@ -39,7 +40,7 @@ public final class GameResultsModifierImpl implements GameResultsModifier {
                 modifiers.put(player, mod);
                 modifierForNames.put(player.getName(), mod);
             } catch (PlayerHasNotBeenAddedToGameException ex) {
-                Logger.getLogger(GameResultsModifierImpl.class.getName()).log(Level.SEVERE, null, ex);
+                log.log(Level.SEVERE, null, ex);
             }
         });
     }
