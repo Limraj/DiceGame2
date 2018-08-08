@@ -9,12 +9,13 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier
 import com.gmail.jarmusik.kamil.dicegame2.game.player.PlayersShiftRegister;
 import com.gmail.jarmusik.kamil.dicegame2.util.IterableShift;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.Set;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
+import lombok.extern.java.Log;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,38 +27,41 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
  *
  * @author Kamil-Tomasz
  */
+@Log
 public class DiceGameEngine implements GameEngine {
     
-    private int totalNumberOfTurns;
-    private final GameResultsModifier gameResultsModifier;
-    private final GameRules rules;
     private final IterableShift<GamePlayer> playersRegisterShift;
+    private final GameResultsModifier modifier;
     private final TurnLoggable logger;
+    private final GameRules rules;
+    private int totalNumberTurns;
     private boolean debugMode;
 
     public DiceGameEngine(Set<GamePlayer> players, GameRules rules) {
-        System.out.print("Load engine...");
-        this.gameResultsModifier = new GameResultsModifierImpl(players);
-        this.rules = rules;
-        this.totalNumberOfTurns = 0;
+        log.log(Level.INFO, "Load engine...");
         this.playersRegisterShift = new PlayersShiftRegister(players);
+        this.modifier = new GameResultsModifierImpl(players);
         this.logger = new TurnLogger();
+        this.rules = rules;
+        this.totalNumberTurns = 0;
         this.debugMode = false;
-        System.out.println(" ok");
+        log.log(Level.INFO, " ok");
     }
 
     @Override
     public GameEngine nextTurn() throws NumberOfTurnsHasExceededException {
         checkHasNextTurnAndIterate();
-        GameResults results = gameResultsModifier.toGameResults(rules.getGameFlow().rulesOfWinning());
         GamePlayer player = playersRegisterShift.next();
+        RulesOfWinning rulesOfWinning = rules.getGameFlow().rulesOfWinning();
         try {
-            gameResultsModifier.addTurnFor(player);
+            GameResults results = modifier.toGameResults(rulesOfWinning);
             logger.startTurnLog(player, results);
+            modifier.addTurnFor(player);
             executeFor(player);
+            results = modifier.toGameResults(rulesOfWinning);
             logger.endTurnLog(player, results);
         } catch (PlayerHasNotBeenAddedToGameException ex) {
-            Logger.getLogger(DiceGameEngine.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
         }
         return this;
     }
@@ -65,63 +69,58 @@ public class DiceGameEngine implements GameEngine {
     private void checkHasNextTurnAndIterate() throws NumberOfTurnsHasExceededException {
         if(!hasNextTurn())
             throw new NumberOfTurnsHasExceededException();
-        totalNumberOfTurns++;
+        totalNumberTurns++;
     }
     
     private void executeFor(GamePlayer player) throws PlayerHasNotBeenAddedToGameException {
         GameFlow flowGame = rules.getGameFlow();
-        int numberOfRollCurrent = 0, pointsRoll;
+        int numberRollCurrent = 0, pointsRoll;
         do {
-            numberOfRollCurrent++;
-            pointsRoll = rules.rollOfDices();
+            numberRollCurrent++;
+            pointsRoll = rules.rollDices();
             if(debugMode)
-                logger.turnLog(numberOfRollCurrent, pointsRoll, flowGame);
-            modifiedResults(flowGame, numberOfRollCurrent, pointsRoll, player);
-        } while(!isEndTurn(flowGame, numberOfRollCurrent, pointsRoll));
+                logger.turnLog(numberRollCurrent, pointsRoll, flowGame);
+            modifiedResults(flowGame, numberRollCurrent, pointsRoll, player);
+        } while(!isEndTurn(flowGame, numberRollCurrent, pointsRoll));
     }
 
-    private boolean isEndTurn(GameFlow flowGame, int numberOfRollCurrent, int pointsRoll) {
-        return flowGame.isEndTurn(numberOfRollCurrent, pointsRoll)
-                || numberOfRollCurrent > rules.getNumberOfRolls();
+    private boolean isEndTurn(GameFlow flowGame, int numberRollCurrent, int pointsRoll) {
+        return flowGame.isEndTurn(numberRollCurrent, pointsRoll)
+                || numberRollCurrent > rules.getNumberRolls();
     }
 
-    private void modifiedResults(GameFlow flowGame, int numberOfRollCurrent, int pointsRoll, GamePlayer player) {
+    private void modifiedResults(GameFlow flowGame, int numberRollCurrent, int pointsRoll, GamePlayer player) {
+        System.out.println("TEST: " + modifier.toGameResults(flowGame.rulesOfWinning()));
+        if(flowGame.isLostTurn(numberRollCurrent, pointsRoll))
+            flowGame.doIfLostTurn(numberRollCurrent, pointsRoll, player)
+                    .forEach(action -> action.execute(modifier, rules));
         
-        if(flowGame.isLostTurn(numberOfRollCurrent, pointsRoll))
-            flowGame.doIfLostTurn(numberOfRollCurrent, pointsRoll, player)
-                    .forEach(action -> action.execute(gameResultsModifier, rules));
+        if(flowGame.isWonTurn(numberRollCurrent, pointsRoll))
+            flowGame.doIfWonTurn(numberRollCurrent, pointsRoll, player)
+                    .forEach(action -> action.execute(modifier, rules));
         
-        if(flowGame.isWonTurn(numberOfRollCurrent, pointsRoll))
-            flowGame.doIfWonTurn(numberOfRollCurrent, pointsRoll, player)
-                    .forEach(action -> action.execute(gameResultsModifier, rules));
-        
-        if(!flowGame.isLostTurn(numberOfRollCurrent, pointsRoll) 
-                && !flowGame.isWonTurn(numberOfRollCurrent, pointsRoll))
-            flowGame.doIfNotWonAndLostTurn(numberOfRollCurrent, pointsRoll, player)
-                    .forEach(action -> action.execute(gameResultsModifier, rules));
-        
+        if(!flowGame.isLostTurn(numberRollCurrent, pointsRoll) 
+                && !flowGame.isWonTurn(numberRollCurrent, pointsRoll))
+            flowGame.doIfNotWonAndLostTurn(numberRollCurrent, pointsRoll, player)
+                    .forEach(action -> action.execute(modifier, rules));
+        System.out.println("TEST2: " + modifier.toGameResults(flowGame.rulesOfWinning()));
     }
 
     @Override
     public void reset() {
-        totalNumberOfTurns = 0;
+        totalNumberTurns = 0;
         playersRegisterShift.reset();
-        gameResultsModifier.reset();
-    }
-
-    @Override
-    public int getTotalNumberOfTurn() {
-        return totalNumberOfTurns;
+        modifier.reset();
     }
 
     @Override
     public boolean hasNextTurn() {
-        return totalNumberOfTurns < rules.getNumberOfTurns() * playersRegisterShift.size();
+        return totalNumberTurns < rules.getNumberTurns() * playersRegisterShift.size();
     }
 
     @Override
     public GameResults getGameResults() {
-        return gameResultsModifier.toGameResults(rules.getGameFlow().rulesOfWinning());
+        return modifier.toGameResults(rules.getGameFlow().rulesOfWinning());
     }
 
     @Override

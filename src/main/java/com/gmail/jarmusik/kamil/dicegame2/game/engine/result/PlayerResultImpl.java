@@ -7,12 +7,14 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine.result;
 
 import java.math.BigDecimal;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  *
  * @author Kamil-Tomasz
  */
 @Getter
+@ToString(exclude="empty")
 class PlayerResultImpl implements PlayerResult {
     
     private final BigDecimal points;
@@ -32,10 +34,5 @@ class PlayerResultImpl implements PlayerResult {
         this.points = BigDecimal.ZERO;
         this.numberWinningTurns = 0;
         this.empty = true;
-    }
-    
-    @Override
-    public boolean isEmpty() {
-        return empty;
     }
 }

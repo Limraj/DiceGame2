@@ -12,32 +12,30 @@ import java.util.logging.Logger;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
+import lombok.extern.java.Log;
 
 /**
  *
  * @author Kamil-Tomasz
  */
 public class TurnLogger implements TurnLoggable {
-    
-    private final static Logger logger = Logger.getLogger(TurnLogger.class.getName());
 
     @Override
     public void startTurnLog(GamePlayer player, GameResults resultsGame) throws PlayerHasNotBeenAddedToGameException {
         PlayerResult result = resultsGame.getPlayerResultFor(player);
-        logger.log(Level.INFO, "Turn number: {0}, for: {1}\nResult: {2}", new Object[]{result.getNumberTurnCurrent(), player, result});
+        System.out.println(String.format("Turn number: %d, for: %s\nResult: %s", result.getNumberTurnCurrent(), player, result));
     }
     
     @Override
     public void turnLog(int numberOfRollCurrent, int pointsRoll, GameFlow master) {
-        logger.log(Level.INFO, "roll[{0}]: {1}, points: {2}", new Object[]{numberOfRollCurrent, pointsRoll, master.pointsScoredPerRoll(numberOfRollCurrent, pointsRoll)});
+        System.out.println(String.format("roll[%d]: %d, points: %s", numberOfRollCurrent, pointsRoll, master.pointsScoredPerRoll(numberOfRollCurrent, pointsRoll)));
     }
     
     @Override
     public void endTurnLog(GamePlayer player, GameResults resultsGame) throws PlayerHasNotBeenAddedToGameException {
         PlayerResult resultPlayerCurrent = resultsGame.getPlayerResultFor(player);
         GamePlayer playerLeader = resultsGame.getLeader();
-        logger.log(Level.INFO, "Result turn: {0}", resultPlayerCurrent);
-        logger.log(Level.INFO, "Leader: {0}\n", playerLeader);
+        System.out.println(String.format("Result turn: %s\nLeader: %s\n", resultPlayerCurrent, playerLeader));
     }
     
 }
