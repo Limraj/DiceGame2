@@ -25,7 +25,7 @@ import static org.junit.Assert.*;
  *
  * @author Kamil-Tomasz
  */
-public class NumberOfTurnsHasExceededExceptionTest {
+public class NumberOfStepsHasExceededExceptionTest {
 
     @Test(expected = NumberOfStepsHasExceededException.class)
     public void testSomeMethod() throws GameException {
