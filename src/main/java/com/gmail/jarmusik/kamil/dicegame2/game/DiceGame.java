@@ -7,7 +7,7 @@ package com.gmail.jarmusik.kamil.dicegame2.game;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.DiceGameEngine;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.GameEngine;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.NumberOfTurnsHasExceededException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
 
 import java.util.logging.Level;
@@ -17,6 +17,8 @@ import java.util.Set;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRulesFactory;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlowFactory;
 
 /**
  *
@@ -27,7 +29,7 @@ public class DiceGame implements Game {
     private final GameEngine engine;
     
     private DiceGame(Set<GamePlayer> players, GameRules rules) {
-        System.out.println("Load game...");
+        System.out.println("Loading game...");
         engine = new DiceGameEngine(players, rules);
     }
 
@@ -39,7 +41,7 @@ public class DiceGame implements Game {
         public Builder() {
             //LinkedHashSet - chcę zachować kolejność dodawanych graczy;
             players = new LinkedHashSet<>();
-            //rules = DiceGameRules.newRules();
+            rules = GameRulesFactory.createRulesFiveTurnsTenRollsTwoDices(GameFlowFactory.createFlowGameDice());
         }
 
         public Builder addPlayer(GamePlayer player) {
@@ -75,15 +77,9 @@ public class DiceGame implements Game {
         System.out.println("Start game!");
         try {
             execute();
-        } catch (NumberOfTurnsHasExceededException ex) {
+        } catch (GameException ex) {
             Logger.getLogger(DiceGame.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    private void execute() throws NumberOfTurnsHasExceededException {
-        engine.reset();
-        while(engine.hasNextTurn())
-            engine.nextTurn();
     }
 
     @Override
@@ -99,5 +95,11 @@ public class DiceGame implements Game {
     @Override
     public void debugMode(boolean debug) {
         engine.debugMode(debug);
+    }
+
+    private void execute() throws GameException {
+        engine.reset();
+        while(engine.hasStepForNextPlayer())
+            engine.nextPlayer();
     }
 }

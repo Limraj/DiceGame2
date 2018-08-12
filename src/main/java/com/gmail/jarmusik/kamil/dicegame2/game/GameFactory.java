@@ -5,6 +5,7 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game;
 
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.Dice;
 import java.util.List;
@@ -20,7 +21,6 @@ import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlowFactory;
 public class GameFactory {
     
     public static Game diceGameTwoPlayersFiveTurnsTenRollsTwoDices() {
-        
         //Najpierw tworzymy flow gry:
         GameFlow gameFlow = GameFlowFactory.createFlowGameDice();
         //Następnie zasady:
@@ -34,7 +34,6 @@ public class GameFactory {
     }
     
     public static Game diceGameFiveTurnsTenRollsTwoDice(List<Dice> dices) {
-        
         //Najpierw tworzymy flow gry:
         GameFlow flowGame = GameFlowFactory.createFlowGameDice();
         //Następnie zasady:

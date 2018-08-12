@@ -5,7 +5,7 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.action;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.PlayerHasNotBeenAddedToGameException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,11 +27,12 @@ public class AddPointsMaxToEndTurn implements ActionGame {
     }
 
     @Override
-    public boolean execute(GameResultsModifier modifier, GameRules rulesGame) {
+    public boolean execute(GameResultsModifier modifier, GameRules rules) {
         try {
-            return modifier.addPointsFor(player, rulesGame.maxPointsToEndTurn(numberRollCurrent));
-        } catch (PlayerHasNotBeenAddedToGameException ex) {
-            Logger.getLogger(AddPoints.class.getName()).log(Level.SEVERE, null, ex);
+            modifier.addPointsFor(player, rules.maxPointsToEndTurn(numberRollCurrent));
+            return true;
+        } catch (GameException ex) {
+            Logger.getLogger(AddPointsMaxToEndTurn.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }

@@ -13,5 +13,5 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier
  * @author Kamil-Tomasz
  */
 public interface ActionGame {
-    boolean execute(GameResultsModifier modifier, GameRules rulesGame);
+    boolean execute(GameResultsModifier modifier, final GameRules rules);
 }

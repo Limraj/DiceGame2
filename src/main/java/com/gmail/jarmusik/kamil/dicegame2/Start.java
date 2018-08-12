@@ -25,6 +25,7 @@ public class Start {
         diceGame.debugMode(true);
         diceGame.start();
         diceGame.printResults();
+
     }
     
 }

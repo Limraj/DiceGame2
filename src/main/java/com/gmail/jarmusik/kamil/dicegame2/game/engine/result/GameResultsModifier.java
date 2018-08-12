@@ -5,19 +5,18 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.result;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.PlayerHasNotBeenAddedToGameException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import java.math.BigDecimal;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
 
 /**
  *
  * @author Kamil-Tomasz
  */
 public interface GameResultsModifier {
-    boolean addPointsFor(GamePlayer player, BigDecimal points) throws PlayerHasNotBeenAddedToGameException;
-    boolean addWinningTurnFor(GamePlayer player) throws PlayerHasNotBeenAddedToGameException;
-    boolean addTurnFor(GamePlayer player) throws PlayerHasNotBeenAddedToGameException;
+    void addPointsFor(GamePlayer player, BigDecimal points) throws GameException;
+    void incrementWinningTurnFor(GamePlayer player) throws GameException;
+    void incrementTurnFor(GamePlayer player) throws GameException;
     void reset();
-    GameResults toGameResults(RulesOfWinning rulesOfWinning);
+    GameResults newGameResults();
 }

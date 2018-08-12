@@ -5,8 +5,7 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.engine;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.NumberOfTurnsHasExceededException;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.PlayerHasNotBeenAddedToGameException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.Dice;
@@ -58,7 +57,7 @@ public class DiceGameEngineTest {
     }
     
     @Test
-    public void testNextTurn0() throws NumberOfTurnsHasExceededException, PlayerHasNotBeenAddedToGameException {
+    public void testNextTurn0() throws GameException {
         
         //When
         
@@ -67,8 +66,8 @@ public class DiceGameEngineTest {
         PlayerResult result1 = results.getPlayerResultFor(player1);
         PlayerResult result2 = results.getPlayerResultFor(player2);
         
-        assertEquals(BigDecimal.valueOf(0), result1.getPoints());
-        assertEquals(BigDecimal.valueOf(0), result2.getPoints());
+        assertEquals(BigDecimal.ZERO, result1.getPoints());
+        assertEquals(BigDecimal.ZERO, result2.getPoints());
         
         assertEquals(0, result1.getNumberTurnCurrent());
         assertEquals(0, result2.getNumberTurnCurrent());
@@ -78,11 +77,11 @@ public class DiceGameEngineTest {
     }
     
     @Test
-    public void testNextTurn1() throws NumberOfTurnsHasExceededException, PlayerHasNotBeenAddedToGameException {
+    public void testNextTurn1() throws GameException {
         
         //When
-        engine.nextTurn();
-        engine.nextTurn();
+        engine.nextPlayer();
+        engine.nextPlayer();
         
         //Then
         GameResults results = engine.getGameResults();
@@ -102,10 +101,10 @@ public class DiceGameEngineTest {
     }
 
     @Test
-    public void testNextTurn2() throws NumberOfTurnsHasExceededException, PlayerHasNotBeenAddedToGameException {
+    public void testNextTurn2() throws GameException {
         //When
-        engine.nextTurn();
-        engine.nextTurn();
+        engine.nextPlayer();
+        engine.nextPlayer();
         
         //Then
         GameResults results = engine.getGameResults();
@@ -125,10 +124,10 @@ public class DiceGameEngineTest {
     }
     
     @Test
-    public void testNextTurn3() throws NumberOfTurnsHasExceededException, PlayerHasNotBeenAddedToGameException {
+    public void testNextTurn3() throws GameException {
         //When
-        engine.nextTurn();
-        engine.nextTurn();
+        engine.nextPlayer();
+        engine.nextPlayer();
         
         //Then
         GameResults results = engine.getGameResults();
@@ -148,10 +147,10 @@ public class DiceGameEngineTest {
     }
     
     @Test
-    public void testNextTurn4() throws NumberOfTurnsHasExceededException, PlayerHasNotBeenAddedToGameException {
+    public void testNextTurn4() throws GameException {
         //When
-        engine.nextTurn();
-        engine.nextTurn();
+        engine.nextPlayer();
+        engine.nextPlayer();
         
         //Then
         GameResults results = engine.getGameResults();
@@ -171,10 +170,10 @@ public class DiceGameEngineTest {
     }
     
     @Test
-    public void testNextTurn5() throws NumberOfTurnsHasExceededException, PlayerHasNotBeenAddedToGameException {
+    public void testNextTurn5() throws GameException {
         //When
-        engine.nextTurn();
-        engine.nextTurn();
+        engine.nextPlayer();
+        engine.nextPlayer();
         
         //Then
         GameResults results = engine.getGameResults();

@@ -24,7 +24,7 @@ public interface GameFlow {
     RulesOfWinning rulesOfWinning();
     BigDecimal pointsScoredPerRoll(int numberOfRollCurrent, int pointsRoll);
     
-    default boolean isEndTurn(int numberOfRollCurrent, int pointsRoll) {
+    default boolean isEndTurnForPlayer(int numberOfRollCurrent, int pointsRoll) {
         //Jeśli przegra, albo wygra turę to koniec tury;
         return isLostTurn(numberOfRollCurrent, pointsRoll) 
                 || isWonTurn(numberOfRollCurrent, pointsRoll);

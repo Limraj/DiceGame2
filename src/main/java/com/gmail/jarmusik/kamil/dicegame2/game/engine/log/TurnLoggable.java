@@ -16,7 +16,10 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
  * @author Kamil-Tomasz
  */
 public interface TurnLoggable {
-    void startTurnLog(GamePlayer player, GameResults resultsGame) throws PlayerHasNotBeenAddedToGameException;
+    void loadingEngine();
+    void okEngine();
+    
+    void startStepLog(GamePlayer player, GameResults resultsGame) throws PlayerHasNotBeenAddedToGameException;
     void turnLog(int numberOfRollCurrent, int pointsRoll, GameFlow master);
-    void endTurnLog(GamePlayer player, GameResults resultsGame) throws PlayerHasNotBeenAddedToGameException;
+    void endStepLog(GamePlayer player, GameResults resultsGame) throws PlayerHasNotBeenAddedToGameException;
 }

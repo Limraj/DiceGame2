@@ -81,11 +81,4 @@ class DiceGameFlow implements GameFlow {
             return o1.getPoints().compareTo(o2.getPoints());
         };
     }
-
-    @Override
-    public boolean isEndTurn(int numberRollCurrent, int pointsRoll) {
-        //Jeśli przegra, albo wygra turę to koniec tury;
-        return isLostTurn(numberRollCurrent, pointsRoll) 
-                || isWonTurn(numberRollCurrent, pointsRoll);
-    }
 }

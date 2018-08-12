@@ -5,7 +5,7 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.engine;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.NumberOfTurnsHasExceededException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
 
 /**
@@ -13,9 +13,9 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
  * @author Kamil-Tomasz
  */
 public interface GameEngine {
-    boolean hasNextTurn();
+    boolean hasStepForNextPlayer();
     void reset();
-    GameEngine nextTurn() throws NumberOfTurnsHasExceededException;
+    GameEngine nextPlayer() throws GameException;
     GameResults getGameResults();
     void debugMode(boolean debug);
 }

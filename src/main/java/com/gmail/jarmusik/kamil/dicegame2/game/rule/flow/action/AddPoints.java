@@ -5,7 +5,7 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.action;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.PlayerHasNotBeenAddedToGameException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,10 +25,11 @@ public class AddPoints implements ActionGame {
     private final int pointsRoll;
     
     @Override
-    public boolean execute(GameResultsModifier modifier, GameRules rulesGame) {
+    public boolean execute(GameResultsModifier modifier, GameRules rules) {
         try {
-            return modifier.addPointsFor(playerGame, rulesGame.getGameFlow().pointsScoredPerRoll(numberRollCurrent, pointsRoll));
-        } catch (PlayerHasNotBeenAddedToGameException ex) {
+            modifier.addPointsFor(playerGame, rules.getGameFlow().pointsScoredPerRoll(numberRollCurrent, pointsRoll));
+            return true;
+        } catch (GameException ex) {
             Logger.getLogger(AddPoints.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
