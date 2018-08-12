@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.action;
+package com.gmail.jarmusik.kamil.dicegame2.game.engine.action;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
@@ -16,23 +16,21 @@ import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
  *
  * @author Kamil-Tomasz
  */
-public class AddPointsMaxToEndTurn implements ActionGame {
+public class IncrementWinningTurn implements GameAction {
     
-    private final GamePlayer player;
-    private final int numberRollCurrent;
+    private final GamePlayer playerGame;
 
-    public AddPointsMaxToEndTurn(GamePlayer player, int numberRollCurrent) {
-        this.player = player;
-        this.numberRollCurrent = numberRollCurrent;
+    public IncrementWinningTurn(GamePlayer playerGame) {
+        this.playerGame = playerGame;
     }
 
     @Override
-    public boolean execute(GameResultsModifier modifier, GameRules rules) {
+    public boolean execute(GameResultsModifier modifier, GameRules rulesGame) {
         try {
-            modifier.addPointsFor(player, rules.maxPointsToEndTurn(numberRollCurrent));
+            modifier.incrementWinningTurnFor(playerGame);
             return true;
         } catch (GameException ex) {
-            Logger.getLogger(AddPointsMaxToEndTurn.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IncrementWinningTurn.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }

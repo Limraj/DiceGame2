@@ -14,6 +14,14 @@ import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesImpl;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameAction;
+import java.util.ArrayList;
+import java.util.List;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.ActionsExecutor;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.ActionsExecutorImpl;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDices;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -49,8 +57,8 @@ public class DiceGameEngine implements GameEngine {
     public GameEngine nextPlayer() throws GameException {
         checkHasStepForNextPlayerAndIncrementNumberStepCurrent();
         GamePlayer player = playersRegisterShift.next();
-        logger.startStepLog(player, modifier.newGameResults());
         modifier.incrementTurnFor(player);
+        logger.startStepLog(player, modifier.newGameResults());
         executeFor(player);
         logger.endStepLog(player, modifier.newGameResults());
         return this;
@@ -63,39 +71,54 @@ public class DiceGameEngine implements GameEngine {
     }
     
     private void executeFor(GamePlayer player) throws PlayerHasNotBeenAddedToGameException {
-        GameFlow flowGame = rules.getGameFlow();
-        int numberRollCurrent = 0, pointsRoll;
+        int numberRollCurrent = 0;
+        List<GameAction> actions = new ArrayList<>();
+        RollDicesResult result;
         do {
-            numberRollCurrent++;
-            pointsRoll = rules.rollDices();
+            result = rollDices(player, ++numberRollCurrent);
             if(debugMode)
-                logger.turnLog(numberRollCurrent, pointsRoll, flowGame);
-            modifiedResults(numberRollCurrent, pointsRoll, player);
-        } while(!isEndTurnForPlayer(numberRollCurrent, pointsRoll));
+                logger.stepLog(result, rules.getGameFlow());
+            addActions(result, actions);
+        } while(!isEndTurnForPlayer(result));
+        executeActions(actions);
     }
 
-    private boolean isEndTurnForPlayer(int numberRollCurrent, int pointsRoll) {
-        GameFlow gameFlow = rules.getGameFlow();
-        return gameFlow.isEndTurnForPlayer(numberRollCurrent, pointsRoll)
-                || numberRollCurrent > rules.getNumberRolls();
+    private RollDicesResult rollDices(GamePlayer player, int numberRollCurrent) {
+        RollDices roll = RollDicesImpl.builder()
+                .dices(rules.getDices())
+                .gamePlayer(player)
+                .numberRollCurrent(numberRollCurrent)
+                .build();
+        return roll.make();
     }
 
-    private void modifiedResults(int numberRollCurrent, int pointsRoll, GamePlayer player) {
+    private void executeActions(List<GameAction> actions) {
+        ActionsExecutor executor = ActionsExecutorImpl.builder()
+                .actions(actions)
+                .modifier(modifier)
+                .rules(rules)
+                .build();
+        executor.execute();
+    }
+
+    private boolean isEndTurnForPlayer(RollDicesResult result) {
+        return rules.getGameFlow().isEndTurnForPlayer(result)
+                || result.getNumberRollCurrent() >= rules.getNumberRolls();
+    }
+
+    private void addActions(RollDicesResult result, List<GameAction> actions) {
   
         GameFlow gameFlow = rules.getGameFlow();
-        if(gameFlow.isLostTurn(numberRollCurrent, pointsRoll))
-            gameFlow.doIfLostTurn(numberRollCurrent, pointsRoll, player)
-                    .forEach(action -> action.execute(modifier, rules));
         
-        if(gameFlow.isWonTurn(numberRollCurrent, pointsRoll))
-            gameFlow.doIfWonTurn(numberRollCurrent, pointsRoll, player)
-                    .forEach(action -> action.execute(modifier, rules));
-        
-        if(!gameFlow.isLostTurn(numberRollCurrent, pointsRoll) 
-                && !gameFlow.isWonTurn(numberRollCurrent, pointsRoll))
-            gameFlow.doIfNotWonAndLostTurn(numberRollCurrent, pointsRoll, player)
-                    .forEach(action -> action.execute(modifier, rules));
+        if(gameFlow.isLostTurn(result))
+            gameFlow.doIfLostTurn(result, actions);
 
+        if(gameFlow.isWonTurn(result))
+            gameFlow.doIfWonTurn(result, actions);
+        
+        if(!gameFlow.isLostTurn(result) && !gameFlow.isWonTurn(result))
+            gameFlow.doIfNotWonAndNotLostTurn(result, actions);
+        
     }
 
     @Override

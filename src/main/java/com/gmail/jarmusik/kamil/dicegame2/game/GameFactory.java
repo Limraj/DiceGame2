@@ -5,7 +5,6 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.Dice;
 import java.util.List;

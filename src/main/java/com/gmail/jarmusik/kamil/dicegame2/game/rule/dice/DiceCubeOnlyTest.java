@@ -21,11 +21,6 @@ public class DiceCubeOnlyTest extends ShiftRegister<Integer> implements Dice {
         super(Arrays.asList(sequence));
         this.diceImpl = Arrays.asList(new Integer[]{1,2,3,4,5,6});
     }
-    
-    @Override
-    public int numberOfWalls() {
-        return diceImpl.size();
-    }
 
     @Override
     public int roll() {
@@ -33,7 +28,7 @@ public class DiceCubeOnlyTest extends ShiftRegister<Integer> implements Dice {
     }
     
     @Override
-    public int maxMeshes() {
-        return 6;
+    public int maxNumberMeshes() {
+        return diceImpl.size();
     }
 }

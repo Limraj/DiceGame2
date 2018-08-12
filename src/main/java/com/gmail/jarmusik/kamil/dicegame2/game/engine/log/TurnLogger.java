@@ -7,12 +7,10 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine.log;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.PlayerHasNotBeenAddedToGameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
-import lombok.extern.java.Log;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
 
 /**
  *
@@ -21,20 +19,20 @@ import lombok.extern.java.Log;
 public class TurnLogger implements TurnLoggable {
 
     @Override
-    public void startStepLog(GamePlayer player, GameResults resultsGame) throws PlayerHasNotBeenAddedToGameException {
-        PlayerResult result = resultsGame.getPlayerResultFor(player);
+    public void startStepLog(GamePlayer player, GameResults results) throws PlayerHasNotBeenAddedToGameException {
+        PlayerResult result = results.getPlayerResultFor(player);
         System.out.println(String.format("Turn number: %d, for: %s\nResult: %s", result.getNumberTurnCurrent(), player, result));
     }
     
     @Override
-    public void turnLog(int numberOfRollCurrent, int pointsRoll, GameFlow master) {
-        System.out.println(String.format("roll[%d]: %d, points: %s", numberOfRollCurrent, pointsRoll, master.pointsScoredPerRoll(numberOfRollCurrent, pointsRoll)));
+    public void stepLog(RollDicesResult result, GameFlow flow) {
+        System.out.println(String.format("roll[%d]: %d, points: %s", result.getNumberRollCurrent(), result.getNumberMeshes(), flow.pointsScoredPerRoll(result)));
     }
     
     @Override
-    public void endStepLog(GamePlayer player, GameResults resultsGame) throws PlayerHasNotBeenAddedToGameException {
-        PlayerResult resultPlayerCurrent = resultsGame.getPlayerResultFor(player);
-        GamePlayer playerLeader = resultsGame.getLeader();
+    public void endStepLog(GamePlayer player, GameResults results) throws PlayerHasNotBeenAddedToGameException {
+        PlayerResult resultPlayerCurrent = results.getPlayerResultFor(player);
+        GamePlayer playerLeader = results.getLeader();
         System.out.println(String.format("Result turn: %s\nLeader: %s\n", resultPlayerCurrent, playerLeader));
     }
 

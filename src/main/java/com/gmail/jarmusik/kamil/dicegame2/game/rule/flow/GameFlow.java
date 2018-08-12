@@ -6,27 +6,27 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.rule.flow;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.action.ActionGame;
 import java.math.BigDecimal;
 import java.util.List;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameAction;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
 
 /**
  *
  * @author Kamil-Tomasz
  */
 public interface GameFlow {
-    boolean isWonTurn(int numberOfRollCurrent, int pointsRoll);
-    boolean isLostTurn(int numberOfRollCurrent, int pointsRoll);
-    List<ActionGame> doIfLostTurn(int numberOfRollCurrent, int pointsRoll, GamePlayer playerGame);
-    List<ActionGame> doIfWonTurn(int numberOfRollCurrent, int pointsRoll, GamePlayer playerGame);
-    List<ActionGame> doIfNotWonAndLostTurn(int numberOfRollCurrent, int pointsRoll, GamePlayer playerGame);
+    boolean isWonTurn(RollDicesResult result);
+    boolean isLostTurn(RollDicesResult result);
+    void doIfLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns);
+    void doIfWonTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns);
+    void doIfNotWonAndNotLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns);
     RulesOfWinning rulesOfWinning();
-    BigDecimal pointsScoredPerRoll(int numberOfRollCurrent, int pointsRoll);
+    BigDecimal pointsScoredPerRoll(RollDicesResult result);
     
-    default boolean isEndTurnForPlayer(int numberOfRollCurrent, int pointsRoll) {
+    default boolean isEndTurnForPlayer(RollDicesResult result) {
         //Jeśli przegra, albo wygra turę to koniec tury;
-        return isLostTurn(numberOfRollCurrent, pointsRoll) 
-                || isWonTurn(numberOfRollCurrent, pointsRoll);
+        return isLostTurn(result) || isWonTurn(result);
     };
 }
