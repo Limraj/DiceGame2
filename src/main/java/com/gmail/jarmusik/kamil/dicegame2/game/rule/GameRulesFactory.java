@@ -36,4 +36,15 @@ public class GameRulesFactory {
             .dices(dices)
             .build();
     }
+    
+    public static GameRules createRulesOneTurnTenRollsTwoDices(GameFlow flowGame) {
+        return DiceGameRules.builder(flowGame)
+            //Każdemu graczowi przypada 5 tur
+            .numberTurns(1)
+            //W każdej turze, gracz wykonuje maksymalnie 10 rzutów
+            .numberRolls(10)
+            .addDice(new DiceCube())
+            .addDice(new DiceCube())
+            .build();
+    }
 }

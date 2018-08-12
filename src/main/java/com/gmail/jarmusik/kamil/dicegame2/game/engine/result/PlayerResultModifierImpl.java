@@ -30,9 +30,9 @@ class PlayerResultModifierImpl implements PlayerResultModifier {
     }
 
     @Override
-    public boolean addPoints(BigDecimal points) {
+    public BigDecimal addPoints(BigDecimal points) {
         this.points = this.points.add(points);
-        return true;
+        return this.points;
     }
     
     @Override
@@ -41,7 +41,7 @@ class PlayerResultModifierImpl implements PlayerResultModifier {
     }
 
     @Override
-    public PlayerResult toPlayerResult() {
+    public PlayerResult newPlayerResult() {
         return new PlayerResultImpl(numberTurnCurrent, points, numberWinningTurns);
     }
 

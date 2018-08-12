@@ -11,10 +11,14 @@ import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
  *
  * @author Kamil-Tomasz
  */
-public class PlayerHasNotBeenAddedToGameException extends Exception {
+public class PlayerHasNotBeenAddedToGameException extends GameException {
     
     public PlayerHasNotBeenAddedToGameException(GamePlayer player) {
         super("The data entered does not match any player added to the game. The Player entered:" + player);
+    }
+    
+    public PlayerHasNotBeenAddedToGameException(String playerName) {
+        super("The data entered does not match any player added to the game. The Player entered:" + playerName);
     }
 
 }

@@ -14,7 +14,6 @@ import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
  * @author Kamil-Tomasz
  */
 public interface GameResults {
-    PlayerResult getPlayerResultFor(String namePlayer) throws PlayerHasNotBeenAddedToGameException;
     PlayerResult getPlayerResultFor(GamePlayer player) throws PlayerHasNotBeenAddedToGameException;
     GamePlayer getLeader();
     List<GamePlayer> getPeleton();

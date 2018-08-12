@@ -21,7 +21,7 @@ import lombok.extern.java.Log;
 public class TurnLogger implements TurnLoggable {
 
     @Override
-    public void startTurnLog(GamePlayer player, GameResults resultsGame) throws PlayerHasNotBeenAddedToGameException {
+    public void startStepLog(GamePlayer player, GameResults resultsGame) throws PlayerHasNotBeenAddedToGameException {
         PlayerResult result = resultsGame.getPlayerResultFor(player);
         System.out.println(String.format("Turn number: %d, for: %s\nResult: %s", result.getNumberTurnCurrent(), player, result));
     }
@@ -32,10 +32,20 @@ public class TurnLogger implements TurnLoggable {
     }
     
     @Override
-    public void endTurnLog(GamePlayer player, GameResults resultsGame) throws PlayerHasNotBeenAddedToGameException {
+    public void endStepLog(GamePlayer player, GameResults resultsGame) throws PlayerHasNotBeenAddedToGameException {
         PlayerResult resultPlayerCurrent = resultsGame.getPlayerResultFor(player);
         GamePlayer playerLeader = resultsGame.getLeader();
         System.out.println(String.format("Result turn: %s\nLeader: %s\n", resultPlayerCurrent, playerLeader));
+    }
+
+    @Override
+    public void loadingEngine() {
+        System.out.print("Loading engine...");
+    }
+
+    @Override
+    public void okEngine() {
+        System.out.println("ok");
     }
     
 }
