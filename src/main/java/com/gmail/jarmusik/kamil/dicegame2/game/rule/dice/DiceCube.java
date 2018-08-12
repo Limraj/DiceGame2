@@ -22,19 +22,14 @@ public class DiceCube implements Dice {
         this.diceImpl = Arrays.asList(new Integer[]{1,2,3,4,5,6});
         this.random = new Random();
     }
-    
-    @Override
-    public int numberOfWalls() {
-        return diceImpl.size();
-    }
 
     @Override
     public int roll() {
-        return diceImpl.get(random.nextInt(numberOfWalls()));
+        return diceImpl.get(random.nextInt(maxNumberMeshes()));
     }
     
     @Override
-    public int maxMeshes() {
-        return 6;
+    public int maxNumberMeshes() {
+        return diceImpl.size();
     }
 }

@@ -5,8 +5,10 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.rule;
 
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.Dice;
 import java.math.BigDecimal;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
+import java.util.List;
 
 /**
  *
@@ -16,9 +18,8 @@ public interface GameRules {
     int getNumberTurns();
     int getNumberRolls();
     GameFlow getGameFlow();
+    List<Dice> getDices();
     
-    int numberDices();
     int maxNumberMeshesForAllDices();
-    int rollDices();
-    BigDecimal maxPointsToEndTurn(int numberOfRollCurrent);
+    BigDecimal maxPointsToEndTurn(int numberRollCurrent);
 }

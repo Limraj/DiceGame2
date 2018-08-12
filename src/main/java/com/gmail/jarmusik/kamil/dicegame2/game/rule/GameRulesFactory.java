@@ -15,8 +15,8 @@ import java.util.List;
  * @author Kamil-Tomasz
  */
 public class GameRulesFactory {
-    public static GameRules createRulesFiveTurnsTenRollsTwoDices(GameFlow flowGame) {
-        return DiceGameRules.builder(flowGame)
+    public static GameRules createRulesFiveTurnsTenRollsTwoDices(GameFlow flow) {
+        return DiceGameRules.builder(flow)
             //Każdemu graczowi przypada 5 tur
             .numberTurns(5)
             //W każdej turze, gracz wykonuje maksymalnie 10 rzutów
@@ -27,8 +27,8 @@ public class GameRulesFactory {
             .build();
     }
     
-    public static GameRules createRulesFiveTurnsTenRolls(GameFlow flowGame, List<Dice> dices) {
-        return DiceGameRules.builder(flowGame)
+    public static GameRules createRulesFiveTurnsTenRolls(GameFlow flow, List<Dice> dices) {
+        return DiceGameRules.builder(flow)
             //Każdemu graczowi przypada 5 tur
             .numberTurns(5)
             //W każdej turze, gracz wykonuje maksymalnie 10 rzutów
@@ -37,11 +37,9 @@ public class GameRulesFactory {
             .build();
     }
     
-    public static GameRules createRulesOneTurnTenRollsTwoDices(GameFlow flowGame) {
-        return DiceGameRules.builder(flowGame)
-            //Każdemu graczowi przypada 5 tur
+    public static GameRules createRulesOneTurnTenRollsTwoDices(GameFlow flow) {
+        return DiceGameRules.builder(flow)
             .numberTurns(1)
-            //W każdej turze, gracz wykonuje maksymalnie 10 rzutów
             .numberRolls(10)
             .addDice(new DiceCube())
             .addDice(new DiceCube())

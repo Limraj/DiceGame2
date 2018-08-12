@@ -6,13 +6,16 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.rule;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.Dice;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResultImpl;
 import java.math.BigDecimal;
 import java.util.List;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Singular;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
+import java.util.Collections;
 import lombok.Getter;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
 
 /**
  *
@@ -26,31 +29,30 @@ class DiceGameRules implements GameRules {
     @Getter private final int numberRolls;
     @Getter @NonNull private final GameFlow gameFlow;
     
-    public static DiceGameRulesBuilder builder(GameFlow gameFlow) {
-        return new DiceGameRulesBuilder().gameFlow(gameFlow);
+    public static DiceGameRulesBuilder builder(GameFlow flow) {
+        return new DiceGameRulesBuilder().gameFlow(flow);
     }
 
     @Override
-    public int rollDices() {
-        return dices.stream().mapToInt((dice) -> dice.roll()).sum();
-    }
-
-    @Override
-    public int numberDices() {
-        return dices.size();
+    public List<Dice> getDices() {
+        return Collections.unmodifiableList(dices);
     }
 
     @Override
     public int maxNumberMeshesForAllDices() {
-        return dices.stream().mapToInt(a -> a.maxMeshes()).sum();
+        return dices.stream().mapToInt(dice -> dice.maxNumberMeshes()).sum();
     }
 
     @Override
-    public BigDecimal maxPointsToEndTurn(int numberOfRollCurrent) {
+    public BigDecimal maxPointsToEndTurn(int numberRollCurrent) {
         BigDecimal accumulator = BigDecimal.ZERO;
-        int maxNumberMeshesForAllDices = maxNumberMeshesForAllDices();
-        for (int i = numberOfRollCurrent; i < getNumberRolls() + 1; i++)
-            accumulator = accumulator.add(gameFlow.pointsScoredPerRoll(i, maxNumberMeshesForAllDices));
+        for (int i = numberRollCurrent; i < getNumberRolls() + 1; i++) {
+            RollDicesResult result = RollDicesResultImpl.builder()
+                .numberMeshes(maxNumberMeshesForAllDices())
+                .numberRollCurrent(i)
+                .build();
+            accumulator = accumulator.add(gameFlow.pointsScoredPerRoll(result));
+        }
         return accumulator;
     }
 }

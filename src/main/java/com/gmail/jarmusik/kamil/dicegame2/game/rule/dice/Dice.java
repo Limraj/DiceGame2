@@ -10,7 +10,6 @@ package com.gmail.jarmusik.kamil.dicegame2.game.rule.dice;
  * @author Kamil-Tomasz
  */
 public interface Dice {
-    int numberOfWalls();
     int roll();
-    int maxMeshes();
+    int maxNumberMeshes();
 }
