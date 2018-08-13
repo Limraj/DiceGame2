@@ -9,8 +9,9 @@ import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
 import java.math.BigDecimal;
 import java.util.List;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameAction;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameAction;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameActionToExecute;
 
 /**
  *

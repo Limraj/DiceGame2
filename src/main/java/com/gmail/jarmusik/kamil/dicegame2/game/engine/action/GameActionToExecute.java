@@ -5,10 +5,13 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.action;
 
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
+
 /**
  *
  * @author Kamil-Tomasz
  */
-public interface GameAction {
-    
+public interface GameActionToExecute extends GameAction {
+    boolean execute(GameResultsModifier modifier, final GameRules rules);
 }

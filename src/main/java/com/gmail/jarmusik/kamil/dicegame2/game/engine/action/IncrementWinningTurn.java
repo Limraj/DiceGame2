@@ -16,7 +16,7 @@ import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
  *
  * @author Kamil-Tomasz
  */
-public class IncrementWinningTurn implements GameAction {
+class IncrementWinningTurn implements GameActionToExecute, GameAction {
     
     private final GamePlayer playerGame;
 

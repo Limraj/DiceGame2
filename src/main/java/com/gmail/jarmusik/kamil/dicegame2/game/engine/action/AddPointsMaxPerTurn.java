@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author Kamil-Tomasz
  */
-public class AddPointsMaxPerTurn implements GameAction {
+class AddPointsMaxPerTurn implements GameActionToExecute {
     
     private final GamePlayer player;
 

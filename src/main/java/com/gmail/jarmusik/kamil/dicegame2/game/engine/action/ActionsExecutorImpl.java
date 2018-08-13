@@ -23,7 +23,7 @@ public class ActionsExecutorImpl implements ActionsExecutor {
 
     @Override
     public void execute() {
-        actions.forEach(a -> a.execute(modifier, rules));
+        actions.forEach(a -> ((GameActionToExecute)a).execute(modifier, rules));
     }
     
 }
