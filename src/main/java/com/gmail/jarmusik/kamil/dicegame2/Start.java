@@ -94,7 +94,7 @@ public class Start {
                 .addDice(new DiceCube())
                 .addDice(new DiceCube())
                 .numberRolls(20)
-                .numberTurns(1000)
+                .numberTurns(100)
                 .build();
         
         Game custom = new DiceGame.Builder(rules)
