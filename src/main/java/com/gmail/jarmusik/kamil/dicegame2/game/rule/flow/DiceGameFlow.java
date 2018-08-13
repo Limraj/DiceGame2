@@ -7,15 +7,12 @@ package com.gmail.jarmusik.kamil.dicegame2.game.rule.flow;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.AddPoints;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.AddPointsMaxPerTurn;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.AddPointsMaxToEndTurn;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.IncrementWinningTurn;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameAction;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameActionFactory;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameAction;
 
 /**
  *
@@ -29,14 +26,16 @@ class DiceGameFlow implements GameFlow {
         //z obu kości równą 7 lub 11, lub w dowolnym rzucie 
         //uzyska sumę oczek z obu kości równą 5, 
         //wygrywa turę przed czasem;
-        return (result.getNumberRollCurrent() == 1 && (result.getNumberMeshes() == 7 || result.getNumberMeshes() == 11)) || result.getNumberMeshes() == 5;
+        return (result.getNumberRollCurrent() == 1 && (result.getNumberMeshes() == 7 
+                || result.getNumberMeshes() == 11)) || result.getNumberMeshes() == 5;
     }
 
     @Override
     public boolean isLostTurn(RollDicesResult result) {
         //Jeżeli gracz w pierwszym rzucie tury uzyska sumę oczek 
         //z obu kości równą 2 lub 12, przegrywa turę przed czasem;
-        return result.getNumberRollCurrent() == 1 && (result.getNumberMeshes() == 2 || result.getNumberMeshes() == 12);
+        return result.getNumberRollCurrent() == 1 && (result.getNumberMeshes() == 2 
+                || result.getNumberMeshes() == 12);
     }
 
     @Override
@@ -51,20 +50,20 @@ class DiceGameFlow implements GameFlow {
     public void doIfLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
         //Jeśli przegra turę dodawana jest maksymalna możliwa liczba punktów za turę;
         actionsToTakenFromPreviousTurns.clear();
-        actionsToTakenFromPreviousTurns.add(new AddPointsMaxPerTurn(result.getGamePlayer()));
+        actionsToTakenFromPreviousTurns.add(GameActionFactory.addPointsMaxPerTurn(result.getGamePlayer()));
     }
 
     @Override
     public void doIfWonTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
         //Jeśli wygra turę dodawana jest wygrana tura;
         actionsToTakenFromPreviousTurns.clear();
-        actionsToTakenFromPreviousTurns.add(new IncrementWinningTurn(result.getGamePlayer()));
+        actionsToTakenFromPreviousTurns.add(GameActionFactory.incrementWinningTurn(result.getGamePlayer()));
     }
 
     @Override
     public void doIfNotWonAndNotLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
         //Jeśli nie wygra ani nie przegra tury to dodawane są punkty obiczane według zasady z punktu 4
-        actionsToTakenFromPreviousTurns.add(new AddPoints(result));
+        actionsToTakenFromPreviousTurns.add(GameActionFactory.addPoints(result));
     }
 
     @Override

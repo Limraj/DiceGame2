@@ -16,7 +16,7 @@ import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
  *
  * @author Kamil-Tomasz
  */
-public class AddPointsMaxToEndTurn implements GameAction {
+class AddPointsMaxToEndTurn implements GameActionToExecute  {
     
     private final GamePlayer player;
     private final int numberRollCurrent;

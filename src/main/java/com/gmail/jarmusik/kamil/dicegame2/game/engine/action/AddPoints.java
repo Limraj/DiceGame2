@@ -9,8 +9,6 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import lombok.Builder;
-import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
 
@@ -19,7 +17,7 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResul
  * @author Kamil-Tomasz
  */
 
-public class AddPoints implements GameAction {
+class AddPoints implements GameActionToExecute {
     
     private final RollDicesResult result;
 

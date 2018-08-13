@@ -50,7 +50,7 @@ class GameResultsImpl implements GameResults {
     
     @Override
     public void printResults() {
-        log.log(Level.INFO, toString());
+        System.out.println("Result:\n" + this);
     }
 
     @Override

@@ -9,16 +9,17 @@ import com.gmail.jarmusik.kamil.dicegame2.game.DiceGame;
 import com.gmail.jarmusik.kamil.dicegame2.game.Game;
 import com.gmail.jarmusik.kamil.dicegame2.game.GameFactory;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRulesFactory;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlowFactory;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameAction;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameActionFactory;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.Dice;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.DiceGameRules;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.DiceCube;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameAction;
 
 /**
  *
@@ -40,10 +41,63 @@ public class Start {
         
         System.out.println("CUSTOM___________________");
         
-        GameFlow flow = GameFlowFactory.createFlowGameDice();
-        GameRules rules = GameRulesFactory.createRulesFiveTurnsTenRollsTwoDices(flow);
+        GameFlow flow = new GameFlow() {
+            @Override
+            public boolean isWonTurn(RollDicesResult result) {
+                return (result.getNumberRollCurrent() == 1 && (result.getNumberMeshes() == 7 
+                        || result.getNumberMeshes() == 11));
+            }
+
+            @Override
+            public boolean isLostTurn(RollDicesResult result) {
+                return result.getNumberRollCurrent() == 1 && (result.getNumberMeshes() == 6 
+                        || result.getNumberMeshes() == 12 || result.getNumberMeshes() == 30);
+            }
+
+            @Override
+            public void doIfLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
+                actionsToTakenFromPreviousTurns.add(GameActionFactory
+                        .addPointsMaxToEndTurn(result.getGamePlayer(), result.getNumberRollCurrent()));
+            }
+
+            @Override
+            public void doIfWonTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
+                actionsToTakenFromPreviousTurns.clear();
+                actionsToTakenFromPreviousTurns.add(GameActionFactory
+                        .incrementWinningTurn(result.getGamePlayer()));
+            }
+
+            @Override
+            public void doIfNotWonAndNotLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
+                actionsToTakenFromPreviousTurns.add(GameActionFactory.addPoints(result));
+            }
+
+            @Override
+            public RulesOfWinning rulesOfWinning() {
+                return () -> (PlayerResult o1, PlayerResult o2) -> {
+                    int winnigTurns = o2.getNumberWinningTurns() - o1.getNumberWinningTurns();
+                    return winnigTurns == 0 ? o1.getPoints().compareTo(o2.getPoints()) : winnigTurns;
+                };
+            }
+
+            @Override
+            public BigDecimal pointsScoredPerRoll(RollDicesResult result) {
+                return GameFlowFactory.createFlowGameDice().pointsScoredPerRoll(result);   
+            }
+        };
+        
+        GameRules rules = DiceGameRules.builder(flow)
+                .addDice(new DiceCube())
+                .addDice(new DiceCube())
+                .addDice(new DiceCube())
+                .addDice(new DiceCube())
+                .addDice(new DiceCube())
+                .numberRolls(20)
+                .numberTurns(1000)
+                .build();
         
         Game custom = new DiceGame.Builder()
+                .rules(rules)
                 .addPlayer("Kamil")
                 .addPlayer("Tomek")
                 .addPlayer("Iza")
@@ -53,7 +107,6 @@ public class Start {
                 .addPlayer("Ula")
                 .addPlayer("Timon")
                 .addPlayer("Ewa")
-                .rules(rules)
                 .build();
         
         custom.debugMode(true);

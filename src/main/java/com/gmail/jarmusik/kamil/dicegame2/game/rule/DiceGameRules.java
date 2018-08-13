@@ -22,7 +22,7 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResul
  * @author Kamil-Tomasz
  */
 @Builder
-class DiceGameRules implements GameRules {
+public class DiceGameRules implements GameRules {
     
     @Singular(value = "addDice") private final List<Dice> dices;
     @Getter private final int numberTurns;
