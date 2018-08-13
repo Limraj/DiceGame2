@@ -5,13 +5,13 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.result;
 
+import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
 import com.gmail.jarmusik.kamil.dicegame2.util.SortMap;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
+
 
 /**
  *

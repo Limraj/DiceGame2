@@ -6,8 +6,9 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.result;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
-import java.math.BigDecimal;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
+import java.math.BigDecimal;
+
 
 /**
  *

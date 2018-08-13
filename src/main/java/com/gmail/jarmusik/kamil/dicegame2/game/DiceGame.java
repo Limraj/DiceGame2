@@ -8,22 +8,22 @@ package com.gmail.jarmusik.kamil.dicegame2.game;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.DiceGameEngine;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.GameEngine;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.LinkedHashSet;
-import java.util.Set;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRulesFactory;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlowFactory;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.logging.Level;
+import lombok.extern.java.Log;
+
+
 
 /**
  *
  * @author Kamil-Tomasz
  */
+@Log
 public class DiceGame implements Game {
     
     private final GameEngine engine;
@@ -36,12 +36,12 @@ public class DiceGame implements Game {
     public static class Builder {
         //Set - nie chce żeby gracze mogli się powtarzać;
         private final Set<GamePlayer> players;
-        private GameRules rules;
+        private final GameRules rules;
         
-        public Builder() {
+        public Builder(GameRules rules) {
             //LinkedHashSet - chcę zachować kolejność dodawanych graczy;
             players = new LinkedHashSet<>();
-            rules = GameRulesFactory.createRulesFiveTurnsTenRollsTwoDices(GameFlowFactory.createFlowGameDice());
+            this.rules = rules;
         }
 
         public Builder addPlayer(GamePlayer player) {
@@ -60,11 +60,6 @@ public class DiceGame implements Game {
             return this;
         }
 
-        public Builder rules(GameRules rules) {
-            this.rules = rules;
-            return this;
-        }
-
         public Game build() {
             if(players.isEmpty())
                 throw new IllegalStateException("No player has been added.");
@@ -78,7 +73,7 @@ public class DiceGame implements Game {
         try {
             execute();
         } catch (GameException ex) {
-            Logger.getLogger(DiceGame.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
         }
     }
 

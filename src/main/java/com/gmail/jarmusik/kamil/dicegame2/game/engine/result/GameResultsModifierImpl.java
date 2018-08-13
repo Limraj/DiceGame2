@@ -8,14 +8,15 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine.result;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.FailedOperationException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.PlayerHasNotBeenAddedToGameException;
+import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
 import java.math.BigDecimal;
-import java.util.Set;
-import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import lombok.extern.java.Log;
+
 
 /**
  *

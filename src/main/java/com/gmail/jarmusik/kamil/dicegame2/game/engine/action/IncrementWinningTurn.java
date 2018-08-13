@@ -7,15 +7,17 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine.action;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
+import java.util.logging.Level;
+import lombok.extern.java.Log;
+
 
 /**
  *
  * @author Kamil-Tomasz
  */
+@Log
 class IncrementWinningTurn implements GameActionToExecute, GameAction {
     
     private final GamePlayer playerGame;
@@ -30,7 +32,7 @@ class IncrementWinningTurn implements GameActionToExecute, GameAction {
             modifier.incrementWinningTurnFor(playerGame);
             return true;
         } catch (GameException ex) {
-            Logger.getLogger(IncrementWinningTurn.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
             return false;
         }
     }

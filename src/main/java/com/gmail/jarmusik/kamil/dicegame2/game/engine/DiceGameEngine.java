@@ -1,27 +1,27 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.engine;
 
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.ActionsExecutor;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.ActionsExecutorImpl;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameAction;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.NumberOfStepsHasExceededException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.PlayerHasNotBeenAddedToGameException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.log.StepLoggable;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.log.StepLogger;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifierImpl;
-import com.gmail.jarmusik.kamil.dicegame2.game.player.PlayersShiftRegister;
-import com.gmail.jarmusik.kamil.dicegame2.util.IterableShift;
-import java.util.Set;
-import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDices;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesImpl;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
+import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
+import com.gmail.jarmusik.kamil.dicegame2.game.player.PlayersShiftRegister;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
+import com.gmail.jarmusik.kamil.dicegame2.util.IterableShift;
 import java.util.ArrayList;
 import java.util.List;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.ActionsExecutor;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.ActionsExecutorImpl;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDices;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameAction;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.log.StepLoggable;
+import java.util.Set;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -43,13 +43,13 @@ public class DiceGameEngine implements GameEngine {
     private boolean debugMode;
 
     public DiceGameEngine(Set<GamePlayer> players, GameRules rules) {
-        this.logger = new StepLogger();
+        logger = new StepLogger();
         logger.loadingEngine();
-        this.playersRegisterShift = new PlayersShiftRegister(players);
-        this.modifier = new GameResultsModifierImpl(players, rules.getGameFlow().rulesOfWinning());
+        playersRegisterShift = new PlayersShiftRegister(players);
+        modifier = new GameResultsModifierImpl(players, rules.getGameFlow().rulesOfWinning());
         this.rules = rules;
-        this.numberStepCurrent = 0;
-        this.debugMode = false;
+        numberStepCurrent = 0;
+        debugMode = false;
         logger.okEngine();
     }
 

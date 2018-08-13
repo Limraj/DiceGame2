@@ -7,15 +7,18 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine.action;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
+import static java.lang.Math.log;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import lombok.extern.java.Log;
+
 
 /**
  *
  * @author Kamil-Tomasz
  */
+@Log
 class AddPointsMaxPerTurn implements GameActionToExecute {
     
     private final GamePlayer player;
@@ -30,7 +33,7 @@ class AddPointsMaxPerTurn implements GameActionToExecute {
             modifier.addPointsFor(player, rules.maxPointsToEndTurn(1));
             return true;
         } catch (GameException ex) {
-            Logger.getLogger(AddPointsMaxToEndTurn.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
             return false;
         }
     }
