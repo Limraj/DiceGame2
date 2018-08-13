@@ -5,17 +5,18 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.rule;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.Dice;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResultImpl;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.Dice;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.Singular;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
-import java.util.Collections;
-import lombok.Getter;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
+
 
 /**
  *

@@ -7,16 +7,18 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine.action;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
+import static java.lang.Math.log;
+import java.util.logging.Level;
+import lombok.extern.java.Log;
+
 
 /**
  *
  * @author Kamil-Tomasz
  */
-
+@Log
 class AddPoints implements GameActionToExecute {
     
     private final RollDicesResult result;
@@ -31,7 +33,7 @@ class AddPoints implements GameActionToExecute {
             modifier.addPointsFor(result.getGamePlayer(), rules.getGameFlow().pointsScoredPerRoll(result));
             return true;
         } catch (GameException ex) {
-            Logger.getLogger(AddPoints.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, null, ex);
             return false;
         }
     }

@@ -6,11 +6,12 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.log;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.PlayerHasNotBeenAddedToGameException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
+
 
 /**
  *

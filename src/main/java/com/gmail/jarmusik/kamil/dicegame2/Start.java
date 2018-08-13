@@ -8,18 +8,19 @@ package com.gmail.jarmusik.kamil.dicegame2;
 import com.gmail.jarmusik.kamil.dicegame2.game.DiceGame;
 import com.gmail.jarmusik.kamil.dicegame2.game.Game;
 import com.gmail.jarmusik.kamil.dicegame2.game.GameFactory;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlowFactory;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameAction;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameActionFactory;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.DiceGameRules;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.DiceCube;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlowFactory;
 import java.math.BigDecimal;
 import java.util.List;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameAction;
+
 
 /**
  *
@@ -96,8 +97,7 @@ public class Start {
                 .numberTurns(1000)
                 .build();
         
-        Game custom = new DiceGame.Builder()
-                .rules(rules)
+        Game custom = new DiceGame.Builder(rules)
                 .addPlayer("Kamil")
                 .addPlayer("Tomek")
                 .addPlayer("Iza")

@@ -1,7 +1,6 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.result;
 
 import java.math.BigDecimal;
-import java.util.Set;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

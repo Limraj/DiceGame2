@@ -6,25 +6,25 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.engine;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
+import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRulesFactory;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.Dice;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.DiceCubeOnlyTest;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlowFactory;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRulesFactory;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlowFactory;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
-import java.util.HashSet;
+
 
 /**
  *

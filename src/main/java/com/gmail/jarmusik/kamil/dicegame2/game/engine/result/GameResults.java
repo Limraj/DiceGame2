@@ -6,8 +6,9 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.result;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.PlayerHasNotBeenAddedToGameException;
-import java.util.List;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
+import java.util.List;
+
 
 /**
  *
