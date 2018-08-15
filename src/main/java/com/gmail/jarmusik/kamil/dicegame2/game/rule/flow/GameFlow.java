@@ -19,9 +19,9 @@ import java.util.List;
 public interface GameFlow {
     boolean isWonTurn(RollDicesResult result);
     boolean isLostTurn(RollDicesResult result);
-    void doIfLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns);
-    void doIfWonTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns);
-    void doIfNotWonAndNotLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns);
+    void makeIfLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns);
+    void makeIfWonTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns);
+    void makeIfNotWonAndNotLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns);
     RulesOfWinning rulesOfWinning();
     BigDecimal pointsScoredPerRoll(RollDicesResult result);
     

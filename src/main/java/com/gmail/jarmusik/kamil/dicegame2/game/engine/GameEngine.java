@@ -13,7 +13,7 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
  * @author Kamil-Tomasz
  */
 public interface GameEngine {
-    boolean hasStepForNextPlayer();
+    boolean hasStep();
     void reset();
     GameEngine nextPlayer() throws GameException;
     GameResults getGameResults();
