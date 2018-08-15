@@ -94,7 +94,7 @@ public class DiceGame implements Game {
 
     private void execute() throws GameException {
         engine.reset();
-        while(engine.hasStepForNextPlayer())
+        while(engine.hasStep())
             engine.nextPlayer();
     }
 }

@@ -55,22 +55,22 @@ public class DiceGameEngine implements GameEngine {
 
     @Override
     public GameEngine nextPlayer() throws GameException {
-        checkHasStepForNextPlayerAndIncrementNumberStepCurrent();
+        hasStepAndIncrementNumberStepCurrentOrThrownException();
         GamePlayer player = playersRegisterShift.next();
         modifier.incrementTurnFor(player);
         logger.startStepLog(player, modifier.newGameResults());
-        executeFor(player);
+        executeStepFor(player);
         logger.endStepLog(player, modifier.newGameResults());
         return this;
     }
     
-    private void checkHasStepForNextPlayerAndIncrementNumberStepCurrent() throws NumberOfStepsHasExceededException {
-        if(!hasStepForNextPlayer())
+    private void hasStepAndIncrementNumberStepCurrentOrThrownException() throws NumberOfStepsHasExceededException {
+        if(!hasStep())
             throw new NumberOfStepsHasExceededException();
         numberStepCurrent++;
     }
     
-    private void executeFor(GamePlayer player) throws PlayerHasNotBeenAddedToGameException {
+    private void executeStepFor(GamePlayer player) throws PlayerHasNotBeenAddedToGameException {
         int numberRollCurrent = 0;
         List<GameAction> actions = new ArrayList<>();
         RollDicesResult result;
@@ -109,11 +109,11 @@ public class DiceGameEngine implements GameEngine {
     private void addActions(RollDicesResult result, List<GameAction> actions) {
         GameFlow gameFlow = rules.getGameFlow();
         if(gameFlow.isLostTurn(result))
-            gameFlow.doIfLostTurn(result, actions);
+            gameFlow.makeIfLostTurn(result, actions);
         if(gameFlow.isWonTurn(result))
-            gameFlow.doIfWonTurn(result, actions);
+            gameFlow.makeIfWonTurn(result, actions);
         if(!gameFlow.isLostTurn(result) && !gameFlow.isWonTurn(result))
-            gameFlow.doIfNotWonAndNotLostTurn(result, actions);
+            gameFlow.makeIfNotWonAndNotLostTurn(result, actions);
     }
 
     @Override
@@ -124,7 +124,7 @@ public class DiceGameEngine implements GameEngine {
     }
 
     @Override
-    public boolean hasStepForNextPlayer() {
+    public boolean hasStep() {
         return numberStepCurrent < rules.getNumberTurns() * playersRegisterShift.size();
     }
 

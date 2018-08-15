@@ -56,20 +56,20 @@ public class Start {
             }
 
             @Override
-            public void doIfLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
+            public void makeIfLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
                 actionsToTakenFromPreviousTurns.add(GameActionFactory
                         .addPointsMaxToEndTurn(result.getGamePlayer(), result.getNumberRollCurrent()));
             }
 
             @Override
-            public void doIfWonTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
+            public void makeIfWonTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
                 actionsToTakenFromPreviousTurns.clear();
                 actionsToTakenFromPreviousTurns.add(GameActionFactory
                         .incrementWinningTurn(result.getGamePlayer()));
             }
 
             @Override
-            public void doIfNotWonAndNotLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
+            public void makeIfNotWonAndNotLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
                 actionsToTakenFromPreviousTurns.add(GameActionFactory.addPoints(result));
             }
 
