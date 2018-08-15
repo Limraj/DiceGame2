@@ -108,12 +108,15 @@ public class DiceGameEngine implements GameEngine {
 
     private void addActions(RollDicesResult result, List<GameAction> actions) {
         GameFlow gameFlow = rules.getGameFlow();
-        if(gameFlow.isLostTurn(result))
+        if(gameFlow.isLostTurn(result)) {
             gameFlow.makeIfLostTurn(result, actions);
-        if(gameFlow.isWonTurn(result))
+            return;
+        }
+        if(gameFlow.isWonTurn(result)) {
             gameFlow.makeIfWonTurn(result, actions);
-        if(!gameFlow.isLostTurn(result) && !gameFlow.isWonTurn(result))
-            gameFlow.makeIfNotWonAndNotLostTurn(result, actions);
+            return;
+        }
+        gameFlow.makeIfNotWonAndNotLostTurn(result, actions);
     }
 
     @Override
