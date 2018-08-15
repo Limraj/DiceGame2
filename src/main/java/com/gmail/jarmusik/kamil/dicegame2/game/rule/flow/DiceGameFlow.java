@@ -48,23 +48,23 @@ class DiceGameFlow implements GameFlow {
     }
 
     @Override
-    public void makeIfLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
+    public void makeIfLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousRolls) {
         //Jeśli przegra turę dodawana jest maksymalna możliwa liczba punktów za turę;
-        actionsToTakenFromPreviousTurns.clear();
-        actionsToTakenFromPreviousTurns.add(GameActionFactory.addPointsMaxPerTurn(result.getGamePlayer()));
+        actionsToTakenFromPreviousRolls.clear();
+        actionsToTakenFromPreviousRolls.add(GameActionFactory.addPointsMaxPerTurn(result.getGamePlayer()));
     }
 
     @Override
-    public void makeIfWonTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
+    public void makeIfWonTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousRolls) {
         //Jeśli wygra turę dodawana jest wygrana tura;
-        actionsToTakenFromPreviousTurns.clear();
-        actionsToTakenFromPreviousTurns.add(GameActionFactory.incrementWinningTurn(result.getGamePlayer()));
+        actionsToTakenFromPreviousRolls.clear();
+        actionsToTakenFromPreviousRolls.add(GameActionFactory.incrementWinningTurn(result.getGamePlayer()));
     }
 
     @Override
-    public void makeIfNotWonAndNotLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
+    public void makeIfNotWonAndNotLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousRolls) {
         //Jeśli nie wygra ani nie przegra tury to dodawane są punkty obiczane według zasady z punktu 4
-        actionsToTakenFromPreviousTurns.add(GameActionFactory.addPoints(result));
+        actionsToTakenFromPreviousRolls.add(GameActionFactory.addPoints(result));
     }
 
     @Override
