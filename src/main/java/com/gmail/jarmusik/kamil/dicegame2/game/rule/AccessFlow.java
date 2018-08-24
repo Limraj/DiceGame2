@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gmail.jarmusik.kamil.dicegame2.game.engine.action;
+package com.gmail.jarmusik.kamil.dicegame2.game.rule;
+
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 
 /**
  *
  * @author Kamil-Tomasz
  */
-public interface GameAction {
-    
+public interface AccessFlow {
+    GameFlow getGameFlow();
 }

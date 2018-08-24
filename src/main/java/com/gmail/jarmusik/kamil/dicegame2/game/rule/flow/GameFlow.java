@@ -5,7 +5,7 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.rule.flow;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameAction;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameAction;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
 import java.math.BigDecimal;
@@ -19,9 +19,9 @@ import java.util.List;
 public interface GameFlow {
     boolean isWonTurn(RollDicesResult result);
     boolean isLostTurn(RollDicesResult result);
-    void makeIfLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousRolls);
-    void makeIfWonTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousRolls);
-    void makeIfNotWonAndNotLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousRolls);
+    void scheduleIfLostTurn(RollDicesResult result, List<GameAction> schedule);
+    void scheduleIfWonTurn(RollDicesResult result, List<GameAction> schedule);
+    void scheduleIfNotWonAndNotLostTurn(RollDicesResult result, List<GameAction> schedule);
     RulesOfWinning rulesOfWinning();
     BigDecimal pointsScoredPerRoll(RollDicesResult result);
     

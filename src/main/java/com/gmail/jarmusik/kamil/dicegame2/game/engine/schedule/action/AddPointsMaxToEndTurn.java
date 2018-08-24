@@ -3,22 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gmail.jarmusik.kamil.dicegame2.game.engine.action;
+package com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameActionException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
-import java.util.logging.Level;
-import lombok.extern.java.Log;
 
 
 /**
  *
  * @author Kamil-Tomasz
  */
-@Log
-class AddPointsMaxToEndTurn implements GameActionToExecute  {
+class AddPointsMaxToEndTurn implements Executable, GameAction {
     
     private final GamePlayer player;
     private final int numberRollCurrent;
@@ -29,13 +26,11 @@ class AddPointsMaxToEndTurn implements GameActionToExecute  {
     }
 
     @Override
-    public boolean execute(GameResultsModifier modifier, GameRules rules) {
+    public void execute(GameResultsModifier modifier, GameRules rules) throws GameActionException {
         try {
             modifier.addPointsFor(player, rules.maxPointsToEndTurn(numberRollCurrent));
-            return true;
-        } catch (GameException ex) {
-            log.log(Level.SEVERE, null, ex);
-            return false;
+        } catch (Exception ex) {
+            throw new GameActionException("player: " + player + ", numberRollCurrent: " + numberRollCurrent, ex);
         }
     }
     

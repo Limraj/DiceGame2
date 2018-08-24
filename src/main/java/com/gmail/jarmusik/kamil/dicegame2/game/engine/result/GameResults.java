@@ -15,7 +15,7 @@ import java.util.List;
  * @author Kamil-Tomasz
  */
 public interface GameResults {
-    PlayerResult getPlayerResultFor(GamePlayer player) throws PlayerHasNotBeenAddedToGameException;
+    PlayerResult getPlayerResultFor(GamePlayer player);
     GamePlayer getLeader();
     List<GamePlayer> getPeleton();
     void printResults();

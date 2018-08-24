@@ -23,9 +23,9 @@ import lombok.Singular;
  * @author Kamil-Tomasz
  */
 @Builder
-public class DiceGameRules implements GameRules {
+public class DiceGameRules implements AccessFlow, GameRules {
     
-    @Singular(value = "addDice") private final List<Dice> dices;
+    @Singular(value = "addDice") @NonNull private final List<Dice> dices;
     @Getter private final int numberTurns;
     @Getter private final int numberRolls;
     @Getter @NonNull private final GameFlow gameFlow;

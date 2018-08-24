@@ -14,15 +14,12 @@ import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import lombok.extern.java.Log;
 
 
 /**
  *
  * @author Kamil-Tomasz
  */
-@Log
 public final class GameResultsModifierImpl implements GameResultsModifier {
     
     private final Map<GamePlayer, PlayerResultModifier> modifiers = new LinkedHashMap<>();
@@ -38,12 +35,8 @@ public final class GameResultsModifierImpl implements GameResultsModifier {
     
     public GameResultsModifierImpl(GameResults gameResults, RulesOfWinning rulesOfWinning) {
         gameResults.getPeleton().forEach((player) -> {
-            try {
-                PlayerResultModifier mod = new PlayerResultModifierImpl(gameResults.getPlayerResultFor(player));
-                modifiers.put(player, mod);
-            } catch (PlayerHasNotBeenAddedToGameException ex) {
-                log.log(Level.SEVERE, null, ex);
-            }
+            PlayerResultModifier mod = new PlayerResultModifierImpl(gameResults.getPlayerResultFor(player));
+            modifiers.put(player, mod);
         });
         this.rulesOfWinning = rulesOfWinning;
     }

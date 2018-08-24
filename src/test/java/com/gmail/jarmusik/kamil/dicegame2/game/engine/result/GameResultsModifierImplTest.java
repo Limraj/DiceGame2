@@ -8,7 +8,6 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine.result;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,7 +32,7 @@ public class GameResultsModifierImplTest {
         Set<GamePlayer> players = new HashSet<>();
         players.add(kamil);
         players.add(bartek);
-        modifier = new GameResultsModifierImpl(players, null);
+        modifier = new GameResultsModifierImpl(players, () -> (a,b) -> 0);
     }
 
     @Test

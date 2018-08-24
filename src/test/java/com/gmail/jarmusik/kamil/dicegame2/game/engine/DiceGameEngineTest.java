@@ -10,6 +10,7 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.AccessFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRulesFactory;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.Dice;
@@ -52,7 +53,7 @@ public class DiceGameEngineTest {
         
         GameFlow flow = GameFlowFactory.createFlowGameDice();
         GameRules rules = GameRulesFactory.createRulesFiveTurnsTenRolls(flow, dices);
-        engine = new DiceGameEngine(players, rules);
+        engine = new DiceGameEngine(players, rules, (AccessFlow) rules);
         engine.debugMode(true);
     }
     

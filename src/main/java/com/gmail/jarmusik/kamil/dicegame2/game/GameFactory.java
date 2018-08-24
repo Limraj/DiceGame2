@@ -6,12 +6,14 @@
 package com.gmail.jarmusik.kamil.dicegame2.game;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
+import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRulesFactory;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.Dice;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlowFactory;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -41,6 +43,13 @@ public class GameFactory {
         return new DiceGame.Builder(rules)
                 .addPlayer("Pierwszy")
                 .addPlayer(new DiceGamePlayer("Drugi"))
+                .build();
+    }
+    
+    public static Game diceGame(Set<GamePlayer> players, GameRules rules) {
+        //Tworzymy grę:
+        return new DiceGame.Builder(rules)
+                .addPlayers(players)
                 .build();
     }
 
