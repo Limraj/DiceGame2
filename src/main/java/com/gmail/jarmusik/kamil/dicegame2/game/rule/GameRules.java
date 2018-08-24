@@ -17,7 +17,6 @@ import java.util.List;
 public interface GameRules {
     int getNumberTurns();
     int getNumberRolls();
-    GameFlow getGameFlow();
     List<Dice> getDices();
     
     int maxNumberMeshesForAllDices();

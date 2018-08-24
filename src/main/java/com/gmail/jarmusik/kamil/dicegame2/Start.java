@@ -8,8 +8,8 @@ package com.gmail.jarmusik.kamil.dicegame2;
 import com.gmail.jarmusik.kamil.dicegame2.game.DiceGame;
 import com.gmail.jarmusik.kamil.dicegame2.game.Game;
 import com.gmail.jarmusik.kamil.dicegame2.game.GameFactory;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameAction;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameActionFactory;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameAction;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameActionFactory;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.DiceGameRules;
@@ -56,21 +56,21 @@ public class Start {
             }
 
             @Override
-            public void makeIfLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
-                actionsToTakenFromPreviousTurns.add(GameActionFactory
+            public void scheduleIfLostTurn(RollDicesResult result, List<GameAction> schedule) {
+                schedule.add(GameActionFactory
                         .addPointsMaxToEndTurn(result.getGamePlayer(), result.getNumberRollCurrent()));
             }
 
             @Override
-            public void makeIfWonTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
-                actionsToTakenFromPreviousTurns.clear();
-                actionsToTakenFromPreviousTurns.add(GameActionFactory
+            public void scheduleIfWonTurn(RollDicesResult result, List<GameAction> schedule) {
+                schedule.clear();
+                schedule.add(GameActionFactory
                         .incrementWinningTurn(result.getGamePlayer()));
             }
 
             @Override
-            public void makeIfNotWonAndNotLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousTurns) {
-                actionsToTakenFromPreviousTurns.add(GameActionFactory.addPoints(result));
+            public void scheduleIfNotWonAndNotLostTurn(RollDicesResult result, List<GameAction> schedule) {
+                schedule.add(GameActionFactory.addPoints(result.getGamePlayer(), pointsScoredPerRoll(result)));
             }
 
             @Override

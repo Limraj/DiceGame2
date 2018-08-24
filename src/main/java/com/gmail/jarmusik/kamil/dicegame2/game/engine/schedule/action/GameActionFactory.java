@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gmail.jarmusik.kamil.dicegame2.game.engine.action;
+package com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
+import java.math.BigDecimal;
 
 /**
  *
@@ -14,8 +14,8 @@ import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
  */
 public class GameActionFactory {
     
-    public static GameAction addPoints(RollDicesResult result) {
-        return new AddPoints(result);
+    public static GameAction addPoints(GamePlayer player, BigDecimal points) {
+        return new AddPoints(player, points);
     }
     
     public static GameAction addPointsMaxPerTurn(GamePlayer player) {
@@ -29,4 +29,5 @@ public class GameActionFactory {
     public static GameAction incrementWinningTurn(GamePlayer player) {
         return new IncrementWinningTurn(player);
     }
+
 }

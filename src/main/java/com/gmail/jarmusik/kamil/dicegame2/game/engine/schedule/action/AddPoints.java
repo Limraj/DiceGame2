@@ -3,38 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gmail.jarmusik.kamil.dicegame2.game.engine.action;
+package com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action;
 
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameActionException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
-import static java.lang.Math.log;
-import java.util.logging.Level;
-import lombok.extern.java.Log;
+import java.math.BigDecimal;
 
 
 /**
  *
  * @author Kamil-Tomasz
  */
-@Log
-class AddPointsMaxPerTurn implements GameActionToExecute {
+class AddPoints implements Executable, GameAction {
     
     private final GamePlayer player;
+    private final BigDecimal points;
 
-    public AddPointsMaxPerTurn(GamePlayer player) {
+    public AddPoints(GamePlayer player, BigDecimal points) {
         this.player = player;
+        this.points = points;
     }
 
     @Override
-    public boolean execute(GameResultsModifier modifier, GameRules rules) {
+    public void execute(GameResultsModifier modifier, GameRules rules) throws GameActionException {
         try {
-            modifier.addPointsFor(player, rules.maxPointsToEndTurn(1));
-            return true;
+            modifier.addPointsFor(player, points);
         } catch (GameException ex) {
-            log.log(Level.SEVERE, null, ex);
-            return false;
+            throw new GameActionException("player: " + player, ex);
         }
     }
+
 }

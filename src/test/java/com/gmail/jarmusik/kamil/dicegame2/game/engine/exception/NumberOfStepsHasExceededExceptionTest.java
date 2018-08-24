@@ -13,6 +13,7 @@ import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlowFactory;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.AccessFlow;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.Test;
@@ -27,7 +28,7 @@ public class NumberOfStepsHasExceededExceptionTest {
     public void testWithoutPlayers() throws GameException {
         GameFlow flow = GameFlowFactory.createFlowGameDice();
         GameRules rules = GameRulesFactory.createRulesOneTurnTenRollsTwoDices(flow);
-        GameEngine engine = new DiceGameEngine(new HashSet<>(), rules);
+        GameEngine engine = new DiceGameEngine(new HashSet<>(), rules, (AccessFlow) rules);
         engine.nextPlayer();
     }
     
@@ -38,7 +39,7 @@ public class NumberOfStepsHasExceededExceptionTest {
         Set<GamePlayer> players = new HashSet<>();
         players.add(new DiceGamePlayer("Marek"));
         players.add(new DiceGamePlayer("Albert"));
-        GameEngine engine = new DiceGameEngine(players, rules);
+        GameEngine engine = new DiceGameEngine(players, rules, (AccessFlow) rules);
         engine.nextPlayer();
         engine.nextPlayer();
         engine.nextPlayer();

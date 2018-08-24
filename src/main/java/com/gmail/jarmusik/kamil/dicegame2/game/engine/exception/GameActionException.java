@@ -9,17 +9,18 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine.exception;
  *
  * @author Kamil-Tomasz
  */
-public class GameException extends Exception {
+public class GameActionException extends GameException {
 
-    public GameException() {
-    }
-
-    public GameException(String message) {
+    public GameActionException(String message) {
         super(message);
     }
 
-    public GameException(String message, Throwable cause) {
-        super(message, cause);
+    public GameActionException(String message, Exception ex) {
+        super(message, ex);
     }
 
+    public GameActionException() {
+        super();
+    }
+    
 }

@@ -16,6 +16,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import lombok.extern.java.Log;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.AccessFlow;
 
 
 
@@ -30,7 +31,7 @@ public class DiceGame implements Game {
     
     private DiceGame(Set<GamePlayer> players, GameRules rules) {
         System.out.println("Loading game...");
-        engine = new DiceGameEngine(players, rules);
+        engine = new DiceGameEngine(players, rules, (AccessFlow) rules);
     }
 
     public static class Builder {
@@ -55,7 +56,7 @@ public class DiceGame implements Game {
             return this;
         }
 
-        public Builder addPlayers(LinkedHashSet<GamePlayer> players) {
+        public Builder addPlayers(Set<GamePlayer> players) {
             this.players.addAll(players);
             return this;
         }

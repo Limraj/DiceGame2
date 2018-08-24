@@ -5,8 +5,8 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.rule.flow;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameAction;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.action.GameActionFactory;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameAction;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameActionFactory;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
@@ -48,23 +48,23 @@ class DiceGameFlow implements GameFlow {
     }
 
     @Override
-    public void makeIfLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousRolls) {
+    public void scheduleIfLostTurn(RollDicesResult result, List<GameAction> schedule) {
         //Jeśli przegra turę dodawana jest maksymalna możliwa liczba punktów za turę;
-        actionsToTakenFromPreviousRolls.clear();
-        actionsToTakenFromPreviousRolls.add(GameActionFactory.addPointsMaxPerTurn(result.getGamePlayer()));
+        schedule.clear();
+        schedule.add(GameActionFactory.addPointsMaxPerTurn(result.getGamePlayer()));
     }
 
     @Override
-    public void makeIfWonTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousRolls) {
+    public void scheduleIfWonTurn(RollDicesResult result, List<GameAction> schedule) {
         //Jeśli wygra turę dodawana jest wygrana tura;
-        actionsToTakenFromPreviousRolls.clear();
-        actionsToTakenFromPreviousRolls.add(GameActionFactory.incrementWinningTurn(result.getGamePlayer()));
+        schedule.clear();
+        schedule.add(GameActionFactory.incrementWinningTurn(result.getGamePlayer()));
     }
 
     @Override
-    public void makeIfNotWonAndNotLostTurn(RollDicesResult result, List<GameAction> actionsToTakenFromPreviousRolls) {
+    public void scheduleIfNotWonAndNotLostTurn(RollDicesResult result, List<GameAction> schedule) {
         //Jeśli nie wygra ani nie przegra tury to dodawane są punkty obiczane według zasady z punktu 4
-        actionsToTakenFromPreviousRolls.add(GameActionFactory.addPoints(result));
+        schedule.add(GameActionFactory.addPoints(result.getGamePlayer(), pointsScoredPerRoll(result)));
     }
 
     @Override
@@ -74,4 +74,5 @@ class DiceGameFlow implements GameFlow {
             return o1.getPoints().compareTo(o2.getPoints());
         };
     }
+   
 }

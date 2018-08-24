@@ -5,10 +5,17 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll;
 
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.Dice;
+import java.util.List;
+
 /**
  *
  * @author Kamil-Tomasz
  */
 public interface RollDices {
     RollDicesResult make();
+
+    public static RollDicesImpl.RollDicesImplBuilder builder(List<Dice> dices) {
+        return new RollDicesImpl.RollDicesImplBuilder().dices(dices);
+    }
 }
