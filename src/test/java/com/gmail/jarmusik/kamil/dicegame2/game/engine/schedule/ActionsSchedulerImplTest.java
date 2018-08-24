@@ -23,8 +23,8 @@ import static org.junit.Assert.assertFalse;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.AccessFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 
 /**
  *
@@ -40,10 +40,11 @@ public class ActionsSchedulerImplTest {
     @BeforeClass
     public static void setup() {
         player = new DiceGamePlayer("Bartek");
-        rules = GameRulesFactory.createRulesFiveTurnsTenRollsTwoDices(GameFlowFactory.createFlowGameDice());
+        GameFlow flow = GameFlowFactory.createFlowGameDice();
+        rules = GameRulesFactory.createRulesFiveTurnsTenRollsTwoDices(flow);
         Set<GamePlayer> players = new HashSet<>();
         players.add(player);
-        modifier = new GameResultsModifierImpl(players, ((AccessFlow)rules).getGameFlow().rulesOfWinning());
+        modifier = new GameResultsModifierImpl(players, flow.rulesOfWinning());
         BigDecimal maxToEndTurn = rules.maxPointsToEndTurn(3);
         BigDecimal maxPerTurn = rules.maxPointsToEndTurn(1);
         BigDecimal startPoints = modifier.newGameResults().getPlayerResultFor(player).getPoints();
