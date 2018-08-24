@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gmail.jarmusik.kamil.dicegame2.game.engine.action;
+package com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameAction;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameActionFactory;
@@ -25,13 +25,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.AccessFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.ActionsScheduler;
 
 /**
  *
  * @author Kamil-Tomasz
  */
-public class GameActionsSchedulerImplTest {
+public class ActionsSchedulerImplTest {
 
     private static GameRules rules;
     private static GameResultsModifier modifier;
