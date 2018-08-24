@@ -7,13 +7,12 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine.rule.flow;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlowFactory;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResultImpl;
 import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.roll.RollDicesResult;
 
 /**
  *
@@ -54,7 +53,7 @@ public class IsLostTurnTest {
 
     @Test
     public void testIsLostTurn() {
-        RollDicesResult result = RollDicesResultImpl.builder()
+        RollDicesResult result = RollDicesResult.builder()
                 .numberMeshes(meshesFromRoll)
                 .numberRollCurrent(numberRollCurrent)
                 .build();

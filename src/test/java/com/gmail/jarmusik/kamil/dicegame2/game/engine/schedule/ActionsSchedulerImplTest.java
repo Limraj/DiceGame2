@@ -8,7 +8,6 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameAction;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameActionFactory;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifierImpl;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRulesFactory;
@@ -23,8 +22,8 @@ import static org.junit.Assert.assertFalse;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.AccessFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 
 /**
  *
@@ -40,10 +39,11 @@ public class ActionsSchedulerImplTest {
     @BeforeClass
     public static void setup() {
         player = new DiceGamePlayer("Bartek");
-        rules = GameRulesFactory.createRulesFiveTurnsTenRollsTwoDices(GameFlowFactory.createFlowGameDice());
+        GameFlow flow = GameFlowFactory.createFlowGameDice();
+        rules = GameRulesFactory.createRulesFiveTurnsTenRollsTwoDices(flow);
         Set<GamePlayer> players = new HashSet<>();
         players.add(player);
-        modifier = new GameResultsModifierImpl(players, ((AccessFlow)rules).getGameFlow().rulesOfWinning());
+        modifier = GameResultsModifier.newModifier(players, flow.rulesOfWinning());
         BigDecimal maxToEndTurn = rules.maxPointsToEndTurn(3);
         BigDecimal maxPerTurn = rules.maxPointsToEndTurn(1);
         BigDecimal startPoints = modifier.newGameResults().getPlayerResultFor(player).getPoints();

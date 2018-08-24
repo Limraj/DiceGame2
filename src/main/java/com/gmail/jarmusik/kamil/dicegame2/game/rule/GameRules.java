@@ -5,7 +5,7 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.rule;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.Dice;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.roll.dice.Dice;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 import java.math.BigDecimal;
 import java.util.List;

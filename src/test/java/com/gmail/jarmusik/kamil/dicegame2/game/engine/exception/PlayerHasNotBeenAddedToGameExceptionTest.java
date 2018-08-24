@@ -6,7 +6,6 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.exception;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifierImpl;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import java.math.BigDecimal;
@@ -21,16 +20,15 @@ import org.junit.Test;
  */
 public class PlayerHasNotBeenAddedToGameExceptionTest {
     
-    static GameResultsModifier modifierWithoutPlayers;
-    static GameResultsModifier modifierWithBartek;
+    private static GameResultsModifier modifierWithoutPlayers;
+    private static GameResultsModifier modifierWithBartek;
     
     @BeforeClass
     public static void setup() {
-        modifierWithoutPlayers = new GameResultsModifierImpl(new HashSet<>(), null);
+        modifierWithoutPlayers = GameResultsModifier.newModifier(new HashSet<>(), null);
         Set<GamePlayer> players = new HashSet<>();
         players.add(new DiceGamePlayer("Bartek"));
-        modifierWithBartek = new GameResultsModifierImpl(players, null);
-        
+        modifierWithBartek = GameResultsModifier.newModifier(players, null);
     }
 
     @Test(expected = PlayerHasNotBeenAddedToGameException.class)

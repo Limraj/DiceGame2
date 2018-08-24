@@ -5,13 +5,13 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.rule;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResult;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll.RollDicesResultImpl;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.dice.Dice;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.roll.RollDicesResult;
+import com.gmail.jarmusik.kamil.dicegame2.game.rule.roll.dice.Dice;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -46,14 +46,15 @@ public class DiceGameRules implements AccessFlow, GameRules {
 
     @Override
     public BigDecimal maxPointsToEndTurn(int numberRollCurrent) {
-        BigDecimal accumulator = BigDecimal.ZERO;
-        for (int i = numberRollCurrent; i < getNumberRolls() + 1; i++) {
-            RollDicesResult result = RollDicesResultImpl.builder()
-                .numberMeshes(maxNumberMeshesForAllDices())
-                .numberRollCurrent(i)
-                .build();
-            accumulator = accumulator.add(gameFlow.pointsScoredPerRoll(result));
-        }
-        return accumulator;
+        return IntStream.range(numberRollCurrent, getNumberRolls() + 1)
+                .mapToObj(i -> {
+                    RollDicesResult result = RollDicesResult.builder()
+                        .numberMeshes(maxNumberMeshesForAllDices())
+                        .numberRollCurrent(i)
+                        .build();
+                    return gameFlow.pointsScoredPerRoll(result);
+                })
+                .reduce((a,b) -> a.add(b))
+                .orElse(BigDecimal.ZERO);
     }
 }
