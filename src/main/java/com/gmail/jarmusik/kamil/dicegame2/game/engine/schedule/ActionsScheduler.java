@@ -13,7 +13,9 @@ import java.util.List;
  * @author Kamil-Tomasz
  */
 public interface ActionsScheduler {
+    
     void complete();
+    
     public static ActionsSchedulerImpl.ActionsSchedulerImplBuilder builder(List<GameAction> schedule) {
         return new ActionsSchedulerImpl.ActionsSchedulerImplBuilder().schedule(schedule);
     }

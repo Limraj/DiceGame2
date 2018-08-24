@@ -20,7 +20,7 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.Executable
  * @author Kamil-Tomasz
  */
 @Builder
-public class ActionsSchedulerImpl implements ActionsScheduler {
+class ActionsSchedulerImpl implements ActionsScheduler {
     
     private final GameResultsModifier modifier;
     private final GameRules rules;

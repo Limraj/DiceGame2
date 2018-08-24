@@ -19,7 +19,7 @@ public class PlayerResultModifierImplTest {
     private static PlayerResultModifier modifier;
     
     @BeforeClass
-    public static void setUpClass() {
+    public static void setup() {
         modifier = new PlayerResultModifierImpl();
     }
     
@@ -30,13 +30,10 @@ public class PlayerResultModifierImplTest {
         BigDecimal pointsToAdded = BigDecimal.TEN;
         PlayerResult playerResult = modifier.newPlayerResult();
         BigDecimal pointsExpected = playerResult.getPoints().add(pointsToAdded);
-
         //when:
         BigDecimal points = modifier.addPoints(pointsToAdded);
-        
         //then:
         assertEquals(pointsExpected, points);
- 
     }
 
     @Test
@@ -45,10 +42,8 @@ public class PlayerResultModifierImplTest {
         //given:
         PlayerResult playerResult = modifier.newPlayerResult();
         int numberTurnCurrentExpected = playerResult.getNumberTurnCurrent() + 1;
-
         //when:
         int numberTurnCurrent = modifier.incrementAndGetNumberTurnCurrent();
-        
         //then:
         assertEquals(numberTurnCurrentExpected, numberTurnCurrent);
     }
@@ -73,7 +68,6 @@ public class PlayerResultModifierImplTest {
         assertTrue(playerResult.getPoints().equals(BigDecimal.ZERO));
         assertTrue(playerResult.getNumberTurnCurrent() == 0);
         assertTrue(playerResult.getNumberWinningTurns() == 0);
-
     }
 
     @Test
@@ -82,10 +76,8 @@ public class PlayerResultModifierImplTest {
         //given:
         PlayerResult playerResult = modifier.newPlayerResult();
         int numberWinningTurnsExpected = playerResult.getNumberWinningTurns() + 1;
-
         //when:
         int numberWinningTurns = modifier.incrementAndGetNumberWinningTurns();
-        
         //then:
         assertEquals(numberWinningTurnsExpected, numberWinningTurns);
     }

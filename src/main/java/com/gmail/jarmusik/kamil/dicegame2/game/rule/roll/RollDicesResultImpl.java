@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gmail.jarmusik.kamil.dicegame2.game.engine.result.roll;
+package com.gmail.jarmusik.kamil.dicegame2.game.rule.roll;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import lombok.Builder;
@@ -17,7 +17,7 @@ import lombok.ToString;
 @Builder
 @ToString
 @Getter
-public class RollDicesResultImpl implements RollDicesResult {
+class RollDicesResultImpl implements RollDicesResult {
     private final int numberRollCurrent;
     private final int numberMeshes;
     private final GamePlayer gamePlayer;

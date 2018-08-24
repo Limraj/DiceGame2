@@ -48,9 +48,9 @@ public class VerdictTest {
         resultsPoints.put(kamil, BigDecimal.TEN);
         Map<GamePlayer, PlayerResult> results = generateResults(resultsPoints);
         //when:
-        GamePlayer gamePlayer = Verdict.determineLeader(results, fewestPointsWins);
+        GamePlayer leader = Verdict.determineLeader(results, fewestPointsWins);
         //then:
-        assertEquals(tomek, gamePlayer);
+        assertEquals(tomek, leader);
     }
 
     @Test
@@ -63,13 +63,13 @@ public class VerdictTest {
         resultsPoints.put(kamil, BigDecimal.ONE);
         Map<GamePlayer, PlayerResult> results = generateResults(resultsPoints);
         //when:
-        List<GamePlayer> gamePlayers = Verdict.determinePeleton(results, fewestPointsWins);
+        List<GamePlayer> peleton = Verdict.determinePeleton(results, fewestPointsWins);
         //then:
-        List<GamePlayer> gamePlayersExpceted = new ArrayList<>();
-        gamePlayersExpceted.add(kamil);
-        gamePlayersExpceted.add(tomek);
-        gamePlayersExpceted.add(bartek);
-        assertEquals(gamePlayersExpceted, gamePlayers);
+        List<GamePlayer> peletonExpected = new ArrayList<>();
+        peletonExpected.add(kamil);
+        peletonExpected.add(tomek);
+        peletonExpected.add(bartek);
+        assertEquals(peletonExpected, peleton);
     }
     
     private static Map<GamePlayer, PlayerResult> generateResults(Map<GamePlayer, BigDecimal> resultsPoints) {

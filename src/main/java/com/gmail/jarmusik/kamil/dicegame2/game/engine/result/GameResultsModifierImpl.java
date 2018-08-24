@@ -20,22 +20,14 @@ import java.util.Set;
  *
  * @author Kamil-Tomasz
  */
-public final class GameResultsModifierImpl implements GameResultsModifier {
+final class GameResultsModifierImpl implements GameResultsModifier {
     
     private final Map<GamePlayer, PlayerResultModifier> modifiers = new LinkedHashMap<>();
     private final RulesOfWinning rulesOfWinning;
 
-    public GameResultsModifierImpl(Set<GamePlayer> players, RulesOfWinning rulesOfWinning) {
+    GameResultsModifierImpl(Set<GamePlayer> players, RulesOfWinning rulesOfWinning) {
         players.forEach((GamePlayer player) -> {
             PlayerResultModifier mod = new PlayerResultModifierImpl();
-            modifiers.put(player, mod);
-        });
-        this.rulesOfWinning = rulesOfWinning;
-    }
-    
-    public GameResultsModifierImpl(GameResults gameResults, RulesOfWinning rulesOfWinning) {
-        gameResults.getPeleton().forEach((player) -> {
-            PlayerResultModifier mod = new PlayerResultModifierImpl(gameResults.getPlayerResultFor(player));
             modifiers.put(player, mod);
         });
         this.rulesOfWinning = rulesOfWinning;

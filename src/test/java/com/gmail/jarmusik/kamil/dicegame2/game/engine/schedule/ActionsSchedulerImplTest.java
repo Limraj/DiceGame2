@@ -8,7 +8,6 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameAction;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameActionFactory;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifierImpl;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRulesFactory;
@@ -44,7 +43,7 @@ public class ActionsSchedulerImplTest {
         rules = GameRulesFactory.createRulesFiveTurnsTenRollsTwoDices(flow);
         Set<GamePlayer> players = new HashSet<>();
         players.add(player);
-        modifier = new GameResultsModifierImpl(players, flow.rulesOfWinning());
+        modifier = GameResultsModifier.newModifier(players, flow.rulesOfWinning());
         BigDecimal maxToEndTurn = rules.maxPointsToEndTurn(3);
         BigDecimal maxPerTurn = rules.maxPointsToEndTurn(1);
         BigDecimal startPoints = modifier.newGameResults().getPlayerResultFor(player).getPoints();
