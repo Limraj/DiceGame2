@@ -14,11 +14,11 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.roll.RollDicesResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.DiceGameRules;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.roll.dice.DiceCube;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlowFactory;
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -74,8 +74,8 @@ public class Start {
             }
 
             @Override
-            public RulesOfWinning rulesOfWinning() {
-                return () -> (PlayerResult o1, PlayerResult o2) -> {
+            public Comparator<PlayerResult> rulesOfWinning() {
+                return (PlayerResult o1, PlayerResult o2) -> {
                     int winnigTurns = o2.getNumberWinningTurns() - o1.getNumberWinningTurns();
                     return winnigTurns == 0 ? o1.getPoints().compareTo(o2.getPoints()) : winnigTurns;
                 };

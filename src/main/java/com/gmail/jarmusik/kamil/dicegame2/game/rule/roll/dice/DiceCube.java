@@ -25,7 +25,7 @@ public class DiceCube implements Dice {
 
     @Override
     public int roll() {
-        return diceImpl.get(random.nextInt(maxNumberMeshes()));
+        return diceImpl.get(random.nextInt(diceImpl.size()));
     }
     
     @Override

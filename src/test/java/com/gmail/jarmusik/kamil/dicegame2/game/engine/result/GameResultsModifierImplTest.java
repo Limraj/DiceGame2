@@ -32,7 +32,7 @@ public class GameResultsModifierImplTest {
         Set<GamePlayer> players = new HashSet<>();
         players.add(kamil);
         players.add(bartek);
-        modifier = new GameResultsModifierImpl(players, () -> (a,b) -> 0);
+        modifier = new GameResultsModifierImpl(players, (a,b) -> 0);
     }
 
     @Test
