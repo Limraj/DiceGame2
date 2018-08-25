@@ -14,9 +14,9 @@ import lombok.ToString;
  *
  * @author Kamil-Tomasz
  */
+@Getter
 @Builder
 @ToString
-@Getter
 class RollDicesResultImpl implements RollDicesResult {
     private final int numberRollCurrent;
     private final int numberMeshes;

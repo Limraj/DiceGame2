@@ -14,7 +14,6 @@ import java.util.List;
  */
 public interface RollDices {
     RollDicesResult make();
-
     public static RollDicesImpl.RollDicesImplBuilder builder(List<Dice> dices) {
         return new RollDicesImpl.RollDicesImplBuilder().dices(dices);
     }

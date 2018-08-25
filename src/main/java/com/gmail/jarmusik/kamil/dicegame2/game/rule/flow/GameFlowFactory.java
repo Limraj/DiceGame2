@@ -11,8 +11,8 @@ package com.gmail.jarmusik.kamil.dicegame2.game.rule.flow;
  */
 public class GameFlowFactory {
     
-    public static GameFlow createFlowGameDice() {
-        return new DiceGameFlow();
+    public static GameFlow createFlowDiceGame() {
+        return new GameFlowImpl();
     }
     
 }

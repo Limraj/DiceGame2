@@ -81,10 +81,10 @@ public class Start {
 
             @Override
             public BigDecimal pointsScoredPerRoll(RollDicesResult result) {
-                return GameFlowFactory.createFlowGameDice().pointsScoredPerRoll(result);   
+                return GameFlowFactory.createFlowDiceGame().pointsScoredPerRoll(result);   
             }
         };
-        
+
         GameRules rules = DiceGameRules.builder(flow)
                 .addDice(new DiceCube())
                 .addDice(new DiceCube())

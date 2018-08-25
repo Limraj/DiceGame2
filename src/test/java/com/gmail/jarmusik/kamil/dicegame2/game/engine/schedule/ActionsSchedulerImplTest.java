@@ -39,7 +39,7 @@ public class ActionsSchedulerImplTest {
     @BeforeClass
     public static void setup() {
         player = new DiceGamePlayer("Bartek");
-        GameFlow flow = GameFlowFactory.createFlowGameDice();
+        GameFlow flow = GameFlowFactory.createFlowDiceGame();
         rules = GameRulesFactory.createRulesFiveTurnsTenRollsTwoDices(flow);
         Set<GamePlayer> players = new HashSet<>();
         players.add(player);

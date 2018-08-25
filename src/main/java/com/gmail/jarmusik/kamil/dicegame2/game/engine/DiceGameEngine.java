@@ -30,7 +30,7 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.ActionsScheduler;
  *
  * @author Kamil-Tomasz
  */
-public class DiceGameEngine implements GameEngine {
+class DiceGameEngine implements GameEngine {
     
     private final IterableShift<GamePlayer> playersRegisterShift;
     private final GameResultsModifier modifier;
@@ -40,7 +40,7 @@ public class DiceGameEngine implements GameEngine {
     private int numberStepCurrent;
     private boolean debugMode;
 
-    public DiceGameEngine(Set<GamePlayer> players, GameRules rules, AccessFlow accessFlow) {
+    DiceGameEngine(Set<GamePlayer> players, GameRules rules, AccessFlow accessFlow) {
         logger = new StepLogger();
         logger.loadingEngine();
         playersRegisterShift = new PlayersShiftRegister(players);
