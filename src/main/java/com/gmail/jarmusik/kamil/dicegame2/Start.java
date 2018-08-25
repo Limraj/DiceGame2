@@ -57,15 +57,13 @@ public class Start {
 
             @Override
             public void scheduleIfLostTurn(RollDicesResult result, List<GameAction> schedule) {
-                schedule.add(GameActionFactory
-                        .addPointsMaxToEndTurn(result.getGamePlayer(), result.getNumberRollCurrent()));
+                schedule.add(GameActionFactory.addPointsMaxToEndTurn(result.getGamePlayer(), result.getNumberRollCurrent()));
             }
 
             @Override
             public void scheduleIfWonTurn(RollDicesResult result, List<GameAction> schedule) {
                 schedule.clear();
-                schedule.add(GameActionFactory
-                        .incrementWinningTurn(result.getGamePlayer()));
+                schedule.add(GameActionFactory.incrementWinningTurn(result.getGamePlayer()));
             }
 
             @Override
@@ -112,7 +110,6 @@ public class Start {
         custom.debugMode(true);
         custom.start();
         custom.printResults();
-
     }
     
 }

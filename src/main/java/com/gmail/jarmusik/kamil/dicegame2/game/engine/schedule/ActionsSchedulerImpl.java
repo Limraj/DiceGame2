@@ -11,14 +11,16 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import lombok.Builder;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.Executable;
+import lombok.extern.java.Log;
 
 /**
  *
  * @author Kamil-Tomasz
  */
+
+@Log
 @Builder
 class ActionsSchedulerImpl implements ActionsScheduler {
     
@@ -32,9 +34,8 @@ class ActionsSchedulerImpl implements ActionsScheduler {
             try {
                 ((Executable)a).execute(modifier, rules);
             } catch (GameActionException ex) {
-                Logger.getLogger(ActionsSchedulerImpl.class.getName()).log(Level.SEVERE, null, ex);
+                log.log(Level.SEVERE, null, ex);
             }
         });
     }
-    
 }
