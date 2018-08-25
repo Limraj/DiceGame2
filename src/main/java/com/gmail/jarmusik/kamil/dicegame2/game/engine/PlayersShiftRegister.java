@@ -6,7 +6,7 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.engine;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
-import com.gmail.jarmusik.kamil.dicegame2.util.ShiftRegister;
+import com.gmail.jarmusik.kamil.dicegame2.game.util.ShiftRegister;
 import java.util.Set;
 
 /**

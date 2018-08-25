@@ -6,7 +6,7 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.result;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
-import com.gmail.jarmusik.kamil.dicegame2.util.SortMap;
+import com.gmail.jarmusik.kamil.dicegame2.game.util.SortMap;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
