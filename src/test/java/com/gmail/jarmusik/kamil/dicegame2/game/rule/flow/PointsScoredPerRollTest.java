@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gmail.jarmusik.kamil.dicegame2.game.engine.rule.flow;
+package com.gmail.jarmusik.kamil.dicegame2.game.rule.flow;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlowFactory;
@@ -38,7 +38,7 @@ public class PointsScoredPerRollTest {
         this.numberRollCurrent = numberRollCurrent;
         this.meshesFromRoll = meshesFromRoll;
         this.expected = new BigDecimal(expected);
-        this.flow = GameFlowFactory.createFlowGameDice();
+        this.flow = GameFlowFactory.createFlowDiceGame();
     }
 
     @Test

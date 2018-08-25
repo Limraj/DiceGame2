@@ -5,7 +5,6 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.DiceGameEngine;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.GameEngine;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
@@ -31,7 +30,7 @@ public class DiceGame implements Game {
     
     private DiceGame(Set<GamePlayer> players, GameRules rules) {
         System.out.println("Loading game...");
-        engine = new DiceGameEngine(players, rules, (AccessFlow) rules);
+        engine = GameEngine.newEngine(players, rules, (AccessFlow) rules);
     }
 
     public static class Builder {

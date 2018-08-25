@@ -51,7 +51,7 @@ public class DiceGameEngineTest {
         dices.add(new DiceCubeOnlyTest(sequenceForDice));
         dices.add(new DiceCubeOnlyTest(sequenceForDice2));
         
-        GameFlow flow = GameFlowFactory.createFlowGameDice();
+        GameFlow flow = GameFlowFactory.createFlowDiceGame();
         GameRules rules = GameRulesFactory.createRulesFiveTurnsTenRolls(flow, dices);
         engine = new DiceGameEngine(players, rules, (AccessFlow) rules);
         engine.debugMode(true);
