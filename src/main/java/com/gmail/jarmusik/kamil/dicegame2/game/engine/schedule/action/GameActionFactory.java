@@ -29,5 +29,4 @@ public class GameActionFactory {
     public static GameAction incrementWinningTurn(GamePlayer player) {
         return new IncrementWinningTurn(player);
     }
-
 }

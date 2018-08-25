@@ -26,7 +26,7 @@ final class GameResultsModifierImpl implements GameResultsModifier {
     private final Comparator<PlayerResult> rulesOfWinning;
 
     GameResultsModifierImpl(Set<GamePlayer> players, Comparator<PlayerResult> rulesOfWinning) {
-        players.forEach((GamePlayer player) -> {
+        players.forEach(player -> {
             PlayerResultModifier mod = new PlayerResultModifierImpl();
             modifiers.put(player, mod);
         });

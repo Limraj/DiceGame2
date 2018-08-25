@@ -19,8 +19,8 @@ class IncrementWinningTurn implements Executable, GameAction {
     
     private final GamePlayer player;
 
-    public IncrementWinningTurn(GamePlayer playerGame) {
-        this.player = playerGame;
+    public IncrementWinningTurn(GamePlayer player) {
+        this.player = player;
     }
 
     @Override
@@ -31,5 +31,4 @@ class IncrementWinningTurn implements Executable, GameAction {
             throw new GameActionException("player: " + player, ex);
         }
     }
-    
 }
