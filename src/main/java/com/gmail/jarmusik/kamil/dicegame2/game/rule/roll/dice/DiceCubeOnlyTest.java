@@ -5,7 +5,7 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.rule.roll.dice;
 
-import com.gmail.jarmusik.kamil.dicegame2.util.ShiftRegister;
+import com.gmail.jarmusik.kamil.dicegame2.game.util.ShiftRegister;
 import java.util.Arrays;
 import java.util.List;
 

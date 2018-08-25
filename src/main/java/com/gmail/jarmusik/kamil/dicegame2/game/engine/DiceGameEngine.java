@@ -12,7 +12,7 @@ import com.gmail.jarmusik.kamil.dicegame2.game.rule.roll.RollDices;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.roll.RollDicesResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.flow.GameFlow;
-import com.gmail.jarmusik.kamil.dicegame2.util.IterableShift;
+import com.gmail.jarmusik.kamil.dicegame2.game.util.IterableShift;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
