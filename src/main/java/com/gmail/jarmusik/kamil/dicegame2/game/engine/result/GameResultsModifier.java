@@ -7,8 +7,8 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine.result;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.Set;
 
 
@@ -23,7 +23,7 @@ public interface GameResultsModifier {
     void reset();
     GameResults newGameResults();
     
-    static GameResultsModifier newModifier(Set<GamePlayer> players, RulesOfWinning rulesOfWinning) {
+    static GameResultsModifier newModifier(Set<GamePlayer> players, Comparator<PlayerResult> rulesOfWinning) {
         return new GameResultsModifierImpl(players, rulesOfWinning);
     }
 }

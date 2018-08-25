@@ -6,9 +6,9 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.result;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
 import com.gmail.jarmusik.kamil.dicegame2.util.SortMap;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,12 +19,12 @@ import java.util.Map;
  */
 public class Verdict {
     
-    static GamePlayer determineLeader(Map<GamePlayer, PlayerResult> results, RulesOfWinning rulesOfWinning) {
+    static GamePlayer determineLeader(Map<GamePlayer, PlayerResult> results, Comparator<PlayerResult> rulesOfWinning) {
         return determinePeleton(results, rulesOfWinning).get(0);
     }
     
-    static List<GamePlayer> determinePeleton(Map<GamePlayer, PlayerResult> results, RulesOfWinning rulesOfWinning) {
-        List<GamePlayer> sorted = SortMap.sortByValueToKeyList(results, rulesOfWinning.getRules());
+    static List<GamePlayer> determinePeleton(Map<GamePlayer, PlayerResult> results, Comparator<PlayerResult> rulesOfWinning) {
+        List<GamePlayer> sorted = SortMap.sortByValueToKeyList(results, rulesOfWinning);
         return Collections.unmodifiableList(sorted);
     }
 }

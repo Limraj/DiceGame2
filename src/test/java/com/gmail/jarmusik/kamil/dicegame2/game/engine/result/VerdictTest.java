@@ -7,9 +7,9 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine.result;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,14 +26,14 @@ public class VerdictTest {
     private static GamePlayer bartek;
     private static GamePlayer kamil;
     private static GamePlayer tomek;
-    private static RulesOfWinning fewestPointsWins;
+    private static Comparator<PlayerResult> fewestPointsWins;
     
     @BeforeClass
     public static void setUpClass() {
         bartek = new DiceGamePlayer("Bartek");
         kamil = new DiceGamePlayer("Kamil");
         tomek = new DiceGamePlayer("Tomek");
-        fewestPointsWins = () -> (PlayerResult o1, PlayerResult o2) -> {
+        fewestPointsWins = (PlayerResult o1, PlayerResult o2) -> {
             return o1.getPoints().compareTo(o2.getPoints());
         };
     }

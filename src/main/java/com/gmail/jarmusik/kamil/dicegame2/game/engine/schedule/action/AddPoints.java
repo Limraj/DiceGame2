@@ -6,7 +6,6 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameActionException;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
@@ -31,7 +30,7 @@ class AddPoints implements Executable, GameAction {
     public void execute(GameResultsModifier modifier, GameRules rules) throws GameActionException {
         try {
             modifier.addPointsFor(player, points);
-        } catch (GameException ex) {
+        } catch (Exception ex) {
             throw new GameActionException("player: " + player, ex);
         }
     }

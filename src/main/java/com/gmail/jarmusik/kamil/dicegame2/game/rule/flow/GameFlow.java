@@ -5,10 +5,11 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.rule.flow;
 
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameAction;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.roll.RollDicesResult;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -22,7 +23,7 @@ public interface GameFlow {
     void scheduleIfLostTurn(RollDicesResult result, List<GameAction> schedule);
     void scheduleIfWonTurn(RollDicesResult result, List<GameAction> schedule);
     void scheduleIfNotWonAndNotLostTurn(RollDicesResult result, List<GameAction> schedule);
-    RulesOfWinning rulesOfWinning();
+    Comparator<PlayerResult> rulesOfWinning();
     BigDecimal pointsScoredPerRoll(RollDicesResult result);
     
     default boolean isEndTurnForPlayer(RollDicesResult result) {

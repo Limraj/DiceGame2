@@ -9,9 +9,9 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameAction
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameActionFactory;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.roll.RollDicesResult;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -68,9 +68,9 @@ class DiceGameFlow implements GameFlow {
     }
 
     @Override
-    public RulesOfWinning rulesOfWinning() {
+    public Comparator<PlayerResult> rulesOfWinning() {
         //Wygrywa gracz, który zbierze mniejszą liczbę punktów;
-        return () -> (PlayerResult o1, PlayerResult o2) -> {
+        return (PlayerResult o1, PlayerResult o2) -> {
             return o1.getPoints().compareTo(o2.getPoints());
         };
     }

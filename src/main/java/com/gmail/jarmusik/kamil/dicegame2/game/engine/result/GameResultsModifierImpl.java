@@ -9,8 +9,8 @@ import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.FailedOperationE
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.PlayerHasNotBeenAddedToGameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -23,9 +23,9 @@ import java.util.Set;
 final class GameResultsModifierImpl implements GameResultsModifier {
     
     private final Map<GamePlayer, PlayerResultModifier> modifiers = new LinkedHashMap<>();
-    private final RulesOfWinning rulesOfWinning;
+    private final Comparator<PlayerResult> rulesOfWinning;
 
-    GameResultsModifierImpl(Set<GamePlayer> players, RulesOfWinning rulesOfWinning) {
+    GameResultsModifierImpl(Set<GamePlayer> players, Comparator<PlayerResult> rulesOfWinning) {
         players.forEach((GamePlayer player) -> {
             PlayerResultModifier mod = new PlayerResultModifierImpl();
             modifiers.put(player, mod);

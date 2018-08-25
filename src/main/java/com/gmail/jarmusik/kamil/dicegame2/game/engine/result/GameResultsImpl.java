@@ -6,7 +6,7 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.result;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
-import com.gmail.jarmusik.kamil.dicegame2.game.rule.RulesOfWinning;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +23,7 @@ class GameResultsImpl implements GameResults {
     @Getter private final List<GamePlayer> peleton;
     @Getter private final GamePlayer leader;
     
-    GameResultsImpl(Map<GamePlayer, PlayerResultModifier> modifiers, RulesOfWinning rulesOfWinning) {
+    GameResultsImpl(Map<GamePlayer, PlayerResultModifier> modifiers, Comparator<PlayerResult> rulesOfWinning) {
         modifiers.forEach((player, modifier) -> {
             PlayerResult result = modifier.newPlayerResult();
             results.put(player, result);
