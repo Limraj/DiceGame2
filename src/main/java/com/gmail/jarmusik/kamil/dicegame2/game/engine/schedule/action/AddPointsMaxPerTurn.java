@@ -31,4 +31,9 @@ class AddPointsMaxPerTurn implements Executable, GameAction {
             throw new GameActionException("player: " + player, ex);
         }
     }
+
+    @Override
+    public String toString() {
+        return "AddPointsMaxPerTurn{" + "player=" + player + '}';
+    }
 }

@@ -9,6 +9,6 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine.exception;
  *
  * @author Kamil-Tomasz
  */
-public class NumberOfStepsHasExceededException extends GameException {
+public class NumberOfTurnsHasExceededException extends GameRuntimeException {
     
 }

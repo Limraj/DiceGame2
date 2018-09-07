@@ -5,6 +5,8 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule;
 
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameActionException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.PlayerHasNotBeenAddedToGameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameAction;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameActionFactory;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResultsModifier;
@@ -46,7 +48,7 @@ public class ActionsSchedulerImplTest {
         modifier = GameResultsModifier.newModifier(players, flow.rulesOfWinning());
         BigDecimal maxToEndTurn = rules.maxPointsToEndTurn(3);
         BigDecimal maxPerTurn = rules.maxPointsToEndTurn(1);
-        BigDecimal startPoints = modifier.newGameResults().getPlayerResultFor(player).getPoints();
+        BigDecimal startPoints = modifier.snapshot().getPlayerResultFor(player).getPoints();
         pointsExpected = startPoints.add(maxPerTurn).add(maxToEndTurn);
     }
     
@@ -63,13 +65,13 @@ public class ActionsSchedulerImplTest {
         schedule.add(GameActionFactory.addPointsMaxToEndTurn(player, 3));
         schedule.add(GameActionFactory.addPointsMaxPerTurn(player));
         
-        ActionsScheduler subject = ActionsScheduler
+        GameActionsScheduler subject = GameActionsScheduler
                 .builder(schedule)
                 .modifier(modifier)
                 .rules(rules).build();
         //when:
         subject.complete();
-        BigDecimal result = modifier.newGameResults().getPlayerResultFor(player).getPoints();
+        BigDecimal result = modifier.snapshot().getPlayerResultFor(player).getPoints();
         
         //then:
         assertFalse(result == null);
@@ -77,31 +79,41 @@ public class ActionsSchedulerImplTest {
         assertEquals(pointsExpected, result);
     }
     
-    @Test
-    public void testCompleteWithException() {
+    @Test(expected = GameActionException.class)
+    public void testCompleteWithArithmeticException() {
         System.out.println("testCompleteWithException");
         //given:
         List<GameAction> schedule = new ArrayList<>();
         schedule.add(GameActionFactory.addPointsMaxToEndTurn(player, 3));
         //GameActionException induced ArithmeticException (RuntimeException)
         schedule.add(GameActionFactory.addPointsMaxToEndTurn(player, 0));
+        //
+        schedule.add(GameActionFactory.addPointsMaxPerTurn(player));
+        
+        GameActionsScheduler subject = GameActionsScheduler
+                .builder(schedule)
+                .modifier(modifier)
+                .rules(rules).build();
+        //when:
+        subject.complete();
+    }
+    
+    @Test(expected = GameActionException.class)
+    public void testCompleteWithPlayerHasNotBeenAddedToGameException() {
+        System.out.println("testCompleteWithException");
+        //given:
+        List<GameAction> schedule = new ArrayList<>();
         //GameActionException induced PlayerHasNotBeenAddedToGameException (Exception)
         GamePlayer player2 = new DiceGamePlayer("Julia");
         schedule.add(GameActionFactory.incrementWinningTurn(player2));
         //
         schedule.add(GameActionFactory.addPointsMaxPerTurn(player));
         
-        ActionsScheduler subject = ActionsScheduler
+        GameActionsScheduler subject = GameActionsScheduler
                 .builder(schedule)
                 .modifier(modifier)
                 .rules(rules).build();
         //when:
         subject.complete();
-        BigDecimal result = modifier.newGameResults().getPlayerResultFor(player).getPoints();
-        
-        //then:
-        assertFalse(result == null);
-        assertFalse(BigDecimal.ZERO.equals(result));
-        assertEquals(pointsExpected, result);
     }
 }

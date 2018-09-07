@@ -21,27 +21,18 @@ import org.junit.Test;
  *
  * @author Kamil-Tomasz
  */
-public class NumberOfStepsHasExceededExceptionTest {
-
-    @Test(expected = NumberOfStepsHasExceededException.class)
-    public void testWithoutPlayers() throws GameException {
-        GameFlow flow = GameFlowFactory.createFlowDiceGame();
-        GameRules rules = GameRulesFactory.createRulesOneTurnTenRollsTwoDices(flow);
-        GameEngine engine = GameEngine.newEngine(new HashSet<>(), rules, (AccessFlow) rules);
-        engine.nextPlayer();
-    }
+public class NumberOfTurnsHasExceededExceptionTest {
     
-    @Test(expected = NumberOfStepsHasExceededException.class)
-    public void testWithPlayers() throws GameException {
+    @Test(expected = NumberOfTurnsHasExceededException.class)
+    public void testWithPlayers() throws GameRuntimeException {
         GameFlow flow = GameFlowFactory.createFlowDiceGame();
         GameRules rules = GameRulesFactory.createRulesOneTurnTenRollsTwoDices(flow);
         Set<GamePlayer> players = new HashSet<>();
         players.add(new DiceGamePlayer("Marek"));
         players.add(new DiceGamePlayer("Albert"));
         GameEngine engine = GameEngine.newEngine(players, rules, (AccessFlow) rules);
-        engine.nextPlayer();
-        engine.nextPlayer();
-        engine.nextPlayer();
+        engine.nextTurn();
+        engine.nextTurn();
     }
     
 }

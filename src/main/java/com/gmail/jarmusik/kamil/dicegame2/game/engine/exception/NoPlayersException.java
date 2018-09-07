@@ -9,17 +9,6 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine.exception;
  *
  * @author Kamil-Tomasz
  */
-public class GameException extends Exception {
-
-    public GameException() {
-    }
-
-    public GameException(String message) {
-        super(message);
-    }
-
-    public GameException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
+public class NoPlayersException extends GameRuntimeException {
+    
 }

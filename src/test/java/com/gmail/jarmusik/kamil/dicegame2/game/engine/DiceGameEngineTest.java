@@ -5,7 +5,7 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.engine;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameRuntimeException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
@@ -58,7 +58,7 @@ public class DiceGameEngineTest {
     }
     
     @Test
-    public void testNextTurn0() throws GameException {
+    public void testNextTurn0() throws GameRuntimeException {
         
         //When
         
@@ -78,11 +78,10 @@ public class DiceGameEngineTest {
     }
     
     @Test
-    public void testNextTurn1() throws GameException {
+    public void testNextTurn1() throws GameRuntimeException {
         
         //When
-        engine.nextPlayer();
-        engine.nextPlayer();
+        engine.nextTurn();
         
         //Then
         GameResults results = engine.getGameResults();
@@ -102,10 +101,9 @@ public class DiceGameEngineTest {
     }
 
     @Test
-    public void testNextTurn2() throws GameException {
+    public void testNextTurn2() throws GameRuntimeException {
         //When
-        engine.nextPlayer();
-        engine.nextPlayer();
+        engine.nextTurn();
         
         //Then
         GameResults results = engine.getGameResults();
@@ -125,10 +123,9 @@ public class DiceGameEngineTest {
     }
     
     @Test
-    public void testNextTurn3() throws GameException {
+    public void testNextTurn3() throws GameRuntimeException {
         //When
-        engine.nextPlayer();
-        engine.nextPlayer();
+        engine.nextTurn();
         
         //Then
         GameResults results = engine.getGameResults();
@@ -148,10 +145,9 @@ public class DiceGameEngineTest {
     }
     
     @Test
-    public void testNextTurn4() throws GameException {
+    public void testNextTurn4() throws GameRuntimeException {
         //When
-        engine.nextPlayer();
-        engine.nextPlayer();
+        engine.nextTurn();
         
         //Then
         GameResults results = engine.getGameResults();
@@ -171,10 +167,9 @@ public class DiceGameEngineTest {
     }
     
     @Test
-    public void testNextTurn5() throws GameException {
+    public void testNextTurn5() throws GameRuntimeException {
         //When
-        engine.nextPlayer();
-        engine.nextPlayer();
+        engine.nextTurn();
         
         //Then
         GameResults results = engine.getGameResults();

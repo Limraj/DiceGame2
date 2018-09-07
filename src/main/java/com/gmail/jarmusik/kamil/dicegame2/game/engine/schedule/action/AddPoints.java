@@ -35,4 +35,8 @@ class AddPoints implements Executable, GameAction {
         }
     }
 
+    @Override
+    public String toString() {
+        return "AddPoints{" + "player=" + player + ", points=" + points + '}';
+    }
 }
