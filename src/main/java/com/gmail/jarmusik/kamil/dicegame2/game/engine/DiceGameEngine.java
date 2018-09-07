@@ -1,9 +1,8 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.engine;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameAction;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.NumberOfStepsHasExceededException;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.PlayerHasNotBeenAddedToGameException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.NoPlayersException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.NumberOfTurnsHasExceededException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.log.StepLoggable;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.log.StepLogger;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.AccessFlow;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.ActionsScheduler;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.GameActionsScheduler;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -37,7 +36,7 @@ class DiceGameEngine implements GameEngine {
     private final StepLoggable logger;
     private final AccessFlow accessFlow;
     private final GameRules rules;
-    private int numberStepCurrent;
+    private int numberTurnCurrent;
     private boolean debugMode;
 
     DiceGameEngine(Set<GamePlayer> players, GameRules rules, AccessFlow accessFlow) {
@@ -47,37 +46,47 @@ class DiceGameEngine implements GameEngine {
         this.accessFlow = accessFlow;
         this.rules = rules;
         modifier = GameResultsModifier.newModifier(players, accessFlow.getGameFlow().rulesOfWinning());
-        numberStepCurrent = 0;
+        numberTurnCurrent = 0;
         debugMode = false;
         logger.okEngine();
     }
 
-    @Override
-    public GameEngine nextPlayer() throws GameException {
-        hasStepAndIncrementNumberStepCurrentOrThrownException();
+    private GameEngine nextPlayer() {
         GamePlayer player = playersRegisterShift.next();
         modifier.incrementTurnFor(player);
-        logger.startStepLog(player, modifier.newGameResults());
+        logger.startStepLog(player, modifier.snapshot());
         executeStepFor(player);
-        logger.endStepLog(player, modifier.newGameResults());
+        logger.endStepLog(player, modifier.snapshot());
+        return this;
+    }
+   
+    @Override
+    public GameEngine nextTurn() {
+        hasPlayersOrThrownException();
+        hasTurnAndIncrementNumberStepCurrentOrThrownException();
+        int step = playersRegisterShift.size();
+        while(step > 0) {
+            nextPlayer();
+            step--;
+        }
         return this;
     }
 
     @Override
     public void reset() {
-        numberStepCurrent = 0;
+        numberTurnCurrent = 0;
         playersRegisterShift.reset();
         modifier.reset();
     }
 
     @Override
-    public boolean hasStep() {
-        return numberStepCurrent < rules.getNumberTurns() * playersRegisterShift.size();
+    public boolean hasTurn() {
+        return numberTurnCurrent < rules.getNumberTurns();
     }
 
     @Override
     public GameResults getGameResults() {
-        return modifier.newGameResults();
+        return modifier.snapshot();
     }
 
     @Override
@@ -85,13 +94,18 @@ class DiceGameEngine implements GameEngine {
         this.debugMode = debugMode;
     }
     
-    private void hasStepAndIncrementNumberStepCurrentOrThrownException() throws NumberOfStepsHasExceededException {
-        if(!hasStep())
-            throw new NumberOfStepsHasExceededException();
-        numberStepCurrent++;
+    private void hasTurnAndIncrementNumberStepCurrentOrThrownException() {
+        if(!hasTurn())
+            throw new NumberOfTurnsHasExceededException();
+        numberTurnCurrent++;
     }
     
-    private void executeStepFor(GamePlayer player) throws PlayerHasNotBeenAddedToGameException {
+    private void hasPlayersOrThrownException() {
+        if(playersRegisterShift.isEmpty())
+            throw new NoPlayersException();
+    }
+    
+    private void executeStepFor(GamePlayer player) {
         int numberRollCurrent = 0;
         List<GameAction> schedule = new ArrayList<>();
         RollDicesResult result;
@@ -114,7 +128,7 @@ class DiceGameEngine implements GameEngine {
     }
 
     private void completeSchedule(List<GameAction> schedule) {
-        ActionsScheduler scheduler = ActionsScheduler
+        GameActionsScheduler scheduler = GameActionsScheduler
                 .builder(schedule)
                 .modifier(modifier)
                 .rules(rules)

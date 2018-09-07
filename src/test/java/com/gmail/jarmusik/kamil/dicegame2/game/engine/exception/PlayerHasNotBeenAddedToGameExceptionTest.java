@@ -32,32 +32,32 @@ public class PlayerHasNotBeenAddedToGameExceptionTest {
     }
 
     @Test(expected = PlayerHasNotBeenAddedToGameException.class)
-    public void testAddPointsForEmptyPlayers() throws GameException {
+    public void testAddPointsForEmptyPlayers() throws GameRuntimeException {
         modifierWithoutPlayers.addPointsFor(new DiceGamePlayer("Tomek"), BigDecimal.TEN);
     }
     
     @Test(expected = PlayerHasNotBeenAddedToGameException.class)
-    public void testAddTurnForEmptyPlayers() throws GameException {
+    public void testAddTurnForEmptyPlayers() throws GameRuntimeException {
         modifierWithoutPlayers.incrementTurnFor(new DiceGamePlayer("Tomek"));
     }
     
     @Test(expected = PlayerHasNotBeenAddedToGameException.class)
-    public void testAddWinningTurnForEmptyPlayers() throws GameException {
+    public void testAddWinningTurnForEmptyPlayers() throws GameRuntimeException {
         modifierWithoutPlayers.incrementWinningTurnFor(new DiceGamePlayer("Tomek"));
     }
     
     @Test(expected = PlayerHasNotBeenAddedToGameException.class)
-    public void testAddPointsForNotEmptyPlayers() throws GameException {
+    public void testAddPointsForNotEmptyPlayers() throws GameRuntimeException {
         modifierWithBartek.addPointsFor(new DiceGamePlayer("Tomek"), BigDecimal.TEN);
     }
     
     @Test(expected = PlayerHasNotBeenAddedToGameException.class)
-    public void testAddTurnForNotEmptyPlayers() throws GameException {
+    public void testAddTurnForNotEmptyPlayers() throws GameRuntimeException {
         modifierWithBartek.incrementTurnFor(new DiceGamePlayer("Tomek"));
     }
     
     @Test(expected = PlayerHasNotBeenAddedToGameException.class)
-    public void testAddWinningTurnForNotEmptyPlayers() throws GameException {
+    public void testAddWinningTurnForNotEmptyPlayers() throws GameRuntimeException {
         modifierWithBartek.incrementWinningTurnFor(new DiceGamePlayer("Tomek"));
     }
 

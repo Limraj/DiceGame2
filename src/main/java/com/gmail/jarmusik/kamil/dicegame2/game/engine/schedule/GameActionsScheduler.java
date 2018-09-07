@@ -12,9 +12,9 @@ import java.util.List;
  *
  * @author Kamil-Tomasz
  */
-public interface ActionsScheduler {
+public interface GameActionsScheduler {
     void complete();
-    public static ActionsSchedulerImpl.ActionsSchedulerImplBuilder builder(List<GameAction> schedule) {
-        return new ActionsSchedulerImpl.ActionsSchedulerImplBuilder().schedule(schedule);
+    public static GameActionsSchedulerImpl.GameActionsSchedulerImplBuilder builder(List<GameAction> schedule) {
+        return new GameActionsSchedulerImpl.GameActionsSchedulerImplBuilder().schedule(schedule);
     }
 }

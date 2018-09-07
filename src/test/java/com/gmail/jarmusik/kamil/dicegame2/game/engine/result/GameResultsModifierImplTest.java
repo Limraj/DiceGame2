@@ -5,7 +5,7 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.result;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameRuntimeException;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import java.math.BigDecimal;
@@ -40,13 +40,13 @@ public class GameResultsModifierImplTest {
         System.out.println("addPointsFor");
         //given:
         BigDecimal points = BigDecimal.ONE;
-        GameResults gameResultsExpected = modifier.newGameResults();
+        GameResults gameResultsExpected = modifier.snapshot();
         BigDecimal pointsKamilExcepted = gameResultsExpected.getPlayerResultFor(kamil).getPoints();
         BigDecimal pointsBartekExcepted = gameResultsExpected.getPlayerResultFor(bartek).getPoints().add(points);
         
         //when:
         modifier.addPointsFor(bartek, points);
-        GameResults gameResults = modifier.newGameResults();
+        GameResults gameResults = modifier.snapshot();
         BigDecimal pointsKamil = gameResults.getPlayerResultFor(kamil).getPoints();
         BigDecimal pointsBartek = gameResults.getPlayerResultFor(bartek).getPoints();
         
@@ -60,13 +60,13 @@ public class GameResultsModifierImplTest {
         System.out.println("addPointsFor");
         //given:
         BigDecimal points = BigDecimal.TEN;
-        GameResults gameResultsExpected = modifier.newGameResults();
+        GameResults gameResultsExpected = modifier.snapshot();
         BigDecimal pointsKamilExcepted = gameResultsExpected.getPlayerResultFor(kamil).getPoints().add(points);
         BigDecimal pointsBartekExcepted = gameResultsExpected.getPlayerResultFor(bartek).getPoints();
         
         //when:
         modifier.addPointsFor(kamil, points);
-        GameResults gameResults = modifier.newGameResults();
+        GameResults gameResults = modifier.snapshot();
         BigDecimal pointsKamil = gameResults.getPlayerResultFor(kamil).getPoints();
         BigDecimal pointsBartek = gameResults.getPlayerResultFor(bartek).getPoints();
         
@@ -79,13 +79,13 @@ public class GameResultsModifierImplTest {
     public void testIncrementTurnForBartek() throws Exception {
         System.out.println("incrementTurnFor");
         //given:
-        GameResults gameResultsExpected = modifier.newGameResults();
+        GameResults gameResultsExpected = modifier.snapshot();
         int numberTurnCurrentKamilExcepted = gameResultsExpected.getPlayerResultFor(kamil).getNumberTurnCurrent();
         int numberTurnCurrentBartekExcepted = gameResultsExpected.getPlayerResultFor(bartek).getNumberTurnCurrent() + 1;
         
         //when:
         modifier.incrementTurnFor(bartek);
-        GameResults gameResults = modifier.newGameResults();
+        GameResults gameResults = modifier.snapshot();
         int numberTurnCurrentKamil = gameResults.getPlayerResultFor(kamil).getNumberTurnCurrent();
         int numberTurnCurrentBartek = gameResults.getPlayerResultFor(bartek).getNumberTurnCurrent();
         
@@ -98,13 +98,13 @@ public class GameResultsModifierImplTest {
     public void testIncrementTurnForKamil() throws Exception {
         System.out.println("incrementTurnFor");
         //given:
-        GameResults gameResultsExpected = modifier.newGameResults();
+        GameResults gameResultsExpected = modifier.snapshot();
         int numberTurnCurrentKamilExcepted = gameResultsExpected.getPlayerResultFor(kamil).getNumberTurnCurrent() + 1;
         int numberTurnCurrentBartekExcepted = gameResultsExpected.getPlayerResultFor(bartek).getNumberTurnCurrent();
         
         //when:
         modifier.incrementTurnFor(kamil);
-        GameResults gameResults = modifier.newGameResults();
+        GameResults gameResults = modifier.snapshot();
         int numberTurnCurrentKamil = gameResults.getPlayerResultFor(kamil).getNumberTurnCurrent();
         int numberTurnCurrentBartek = gameResults.getPlayerResultFor(bartek).getNumberTurnCurrent();
         
@@ -117,13 +117,13 @@ public class GameResultsModifierImplTest {
     public void testIncrementWinningTurnForKamil() throws Exception {
         System.out.println("incrementWinningTurnFor");
         //given:
-        GameResults gameResultsExpected = modifier.newGameResults();
+        GameResults gameResultsExpected = modifier.snapshot();
         int numberWinningTurnsKamilExcepted = gameResultsExpected.getPlayerResultFor(kamil).getNumberWinningTurns() + 1;
         int numberWinningTurnsBartekExcepted = gameResultsExpected.getPlayerResultFor(bartek).getNumberWinningTurns();
         
         //when:
         modifier.incrementWinningTurnFor(kamil);
-        GameResults gameResults = modifier.newGameResults();
+        GameResults gameResults = modifier.snapshot();
         int numberWinningTurnsKamil = gameResults.getPlayerResultFor(kamil).getNumberWinningTurns();
         int numberWinningTurnsBartek = gameResults.getPlayerResultFor(bartek).getNumberWinningTurns();
         
@@ -136,13 +136,13 @@ public class GameResultsModifierImplTest {
     public void testIncrementWinningTurnForBartek() throws Exception {
         System.out.println("incrementWinningTurnFor");
         //given:
-        GameResults gameResultsExpected = modifier.newGameResults();
+        GameResults gameResultsExpected = modifier.snapshot();
         int numberWinningTurnsKamilExcepted = gameResultsExpected.getPlayerResultFor(kamil).getNumberWinningTurns();
         int numberWinningTurnsBartekExcepted = gameResultsExpected.getPlayerResultFor(bartek).getNumberWinningTurns() + 1;
         
         //when:
         modifier.incrementWinningTurnFor(bartek);
-        GameResults gameResults = modifier.newGameResults();
+        GameResults gameResults = modifier.snapshot();
         int numberWinningTurnsKamil = gameResults.getPlayerResultFor(kamil).getNumberWinningTurns();
         int numberWinningTurnsBartek = gameResults.getPlayerResultFor(bartek).getNumberWinningTurns();
         
@@ -152,7 +152,7 @@ public class GameResultsModifierImplTest {
     }
 
     @Test
-    public void testReset() throws GameException {
+    public void testReset() throws GameRuntimeException {
         System.out.println("reset");
         //given:
         modifier.reset();
@@ -163,7 +163,7 @@ public class GameResultsModifierImplTest {
         modifier.addPointsFor(kamil, BigDecimal.TEN);
         modifier.incrementTurnFor(kamil);
         //then:
-        GameResults gameResultsExpected = modifier.newGameResults();
+        GameResults gameResultsExpected = modifier.snapshot();
         assertFalse(gameResultsExpected.getPlayerResultFor(bartek).getPoints().equals(BigDecimal.ZERO));
         assertFalse(gameResultsExpected.getPlayerResultFor(bartek).getNumberTurnCurrent() == 0);
         assertFalse(gameResultsExpected.getPlayerResultFor(bartek).getNumberWinningTurns() == 0);
@@ -173,7 +173,7 @@ public class GameResultsModifierImplTest {
         //when:
         modifier.reset();
         //then:
-        GameResults gameResults = modifier.newGameResults();
+        GameResults gameResults = modifier.snapshot();
         assertTrue(gameResults.getPlayerResultFor(bartek).getPoints().equals(BigDecimal.ZERO));
         assertTrue(gameResults.getPlayerResultFor(bartek).getNumberTurnCurrent() == 0);
         assertTrue(gameResults.getPlayerResultFor(bartek).getNumberWinningTurns() == 0);

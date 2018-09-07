@@ -34,7 +34,7 @@ public class GameFactory {
                 .build();
     }
     
-    public static Game diceGameFiveTurnsTenRollsTwoDice(List<Dice> dices) {
+    public static Game diceGameTwoPlayersFiveTurnsTenRolls(List<Dice> dices) {
         //Najpierw tworzymy flow gry:
         GameFlow flowGame = GameFlowFactory.createFlowDiceGame();
         //Następnie zasady:

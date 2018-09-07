@@ -33,5 +33,9 @@ class AddPointsMaxToEndTurn implements Executable, GameAction {
             throw new GameActionException("player: " + player + ", numberRollCurrent: " + numberRollCurrent, ex);
         }
     }
-    
+
+    @Override
+    public String toString() {
+        return "AddPointsMaxToEndTurn{" + "player=" + player + ", numberRollCurrent=" + numberRollCurrent + '}';
+    }
 }

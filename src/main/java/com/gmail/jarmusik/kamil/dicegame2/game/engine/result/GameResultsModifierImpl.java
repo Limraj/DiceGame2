@@ -6,7 +6,7 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.engine.result;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.FailedOperationException;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameRuntimeException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.PlayerHasNotBeenAddedToGameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import java.math.BigDecimal;
@@ -34,7 +34,7 @@ final class GameResultsModifierImpl implements GameResultsModifier {
     }
 
     @Override
-    public void addPointsFor(GamePlayer player, BigDecimal points) throws GameException {
+    public void addPointsFor(GamePlayer player, BigDecimal points) {
         throwExceptionIfPlayerHasNotBeenAddedToGame(player);
         BigDecimal before = modifiers.get(player).newPlayerResult().getPoints();
         BigDecimal after = modifiers.get(player).addPoints(points);
@@ -42,7 +42,7 @@ final class GameResultsModifierImpl implements GameResultsModifier {
     }
 
     @Override
-    public void incrementTurnFor(GamePlayer player) throws GameException {
+    public void incrementTurnFor(GamePlayer player) {
         throwExceptionIfPlayerHasNotBeenAddedToGame(player);
         int before = modifiers.get(player).newPlayerResult().getNumberTurnCurrent();
         int after = modifiers.get(player).incrementAndGetNumberTurnCurrent();
@@ -50,12 +50,12 @@ final class GameResultsModifierImpl implements GameResultsModifier {
     }
 
     @Override
-    public GameResults newGameResults() {
+    public GameResults snapshot() {
         return new GameResultsImpl(modifiers , rulesOfWinning);
     }
     
     @Override
-    public void incrementWinningTurnFor(GamePlayer player) throws GameException {
+    public void incrementWinningTurnFor(GamePlayer player) {
         throwExceptionIfPlayerHasNotBeenAddedToGame(player);
         PlayerResultModifier mod = modifiers.get(player);
         int before = mod.newPlayerResult().getNumberWinningTurns();
@@ -70,12 +70,12 @@ final class GameResultsModifierImpl implements GameResultsModifier {
         });
     }
     
-    private void throwExceptionIfFalse(boolean condition) throws FailedOperationException {
+    private void throwExceptionIfFalse(boolean condition) {
         if(!condition)
             throw new FailedOperationException();
     }
     
-    private void throwExceptionIfPlayerHasNotBeenAddedToGame(GamePlayer player) throws PlayerHasNotBeenAddedToGameException {
+    private void throwExceptionIfPlayerHasNotBeenAddedToGame(GamePlayer player) {
         if(!modifiers.containsKey(player))
             throw new PlayerHasNotBeenAddedToGameException(player);
     }

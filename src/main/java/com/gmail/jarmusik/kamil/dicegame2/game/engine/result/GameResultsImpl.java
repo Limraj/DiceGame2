@@ -41,12 +41,12 @@ class GameResultsImpl implements GameResults {
     
     @Override
     public void printResults() {
-        System.out.println("Result:\n" + this);
+        System.out.println(toString());
     }
 
     @Override
     public String toString() {
-        StringBuilder logPlan = new StringBuilder("\n-----------------\n");
+        StringBuilder logPlan = new StringBuilder("Result:\n-----------------\n");
         peleton.forEach(a -> {
             logPlan.append(a)
                     .append(" - ")

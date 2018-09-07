@@ -5,7 +5,6 @@
  */
 package com.gmail.jarmusik.kamil.dicegame2.game.engine;
 
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.AccessFlow;
@@ -17,9 +16,9 @@ import java.util.Set;
  * @author Kamil-Tomasz
  */
 public interface GameEngine {
-    boolean hasStep();
+    boolean hasTurn();
     void reset();
-    GameEngine nextPlayer() throws GameException;
+    GameEngine nextTurn();
     GameResults getGameResults();
     void debugMode(boolean debug);
     static GameEngine newEngine(Set<GamePlayer> players, GameRules rules, AccessFlow accessFlow) {

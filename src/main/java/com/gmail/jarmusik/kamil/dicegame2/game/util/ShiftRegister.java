@@ -39,4 +39,9 @@ public class ShiftRegister<T> implements IterableShift<T> {
     public final void reset() {
         objectsIterator = objects.iterator();
     }
+
+    @Override
+    public boolean isEmpty() {
+        return objects.isEmpty();
+    }
 }

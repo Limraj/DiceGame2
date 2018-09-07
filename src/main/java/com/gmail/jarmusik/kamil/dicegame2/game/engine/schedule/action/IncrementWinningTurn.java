@@ -31,4 +31,9 @@ class IncrementWinningTurn implements Executable, GameAction {
             throw new GameActionException("player: " + player, ex);
         }
     }
+
+    @Override
+    public String toString() {
+        return "IncrementWinningTurn{" + "player=" + player + '}';
+    }
 }

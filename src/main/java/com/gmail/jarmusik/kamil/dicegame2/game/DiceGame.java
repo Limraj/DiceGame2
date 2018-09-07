@@ -6,14 +6,13 @@
 package com.gmail.jarmusik.kamil.dicegame2.game;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.GameEngine;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameException;
+import com.gmail.jarmusik.kamil.dicegame2.game.engine.exception.GameRuntimeException;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.GameResults;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.DiceGamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.player.GamePlayer;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.logging.Level;
 import lombok.extern.java.Log;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.AccessFlow;
 
@@ -70,11 +69,7 @@ public class DiceGame implements Game {
     @Override
     public void start() {
         System.out.println("Start game!");
-        try {
-            execute();
-        } catch (GameException ex) {
-            log.log(Level.SEVERE, null, ex);
-        }
+        execute();
     }
 
     @Override
@@ -92,9 +87,9 @@ public class DiceGame implements Game {
         engine.debugMode(debug);
     }
 
-    private void execute() throws GameException {
+    private void execute() throws GameRuntimeException {
         engine.reset();
-        while(engine.hasStep())
-            engine.nextPlayer();
+        while(engine.hasTurn())
+            engine.nextTurn();
     }
 }

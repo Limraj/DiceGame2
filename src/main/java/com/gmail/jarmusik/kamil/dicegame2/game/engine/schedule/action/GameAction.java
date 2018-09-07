@@ -9,5 +9,5 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action;
  *
  * @author Kamil-Tomasz
  */
-public interface GameAction {   
+public interface GameAction {
 }

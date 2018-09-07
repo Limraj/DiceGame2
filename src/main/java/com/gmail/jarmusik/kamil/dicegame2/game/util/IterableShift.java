@@ -14,4 +14,5 @@ public interface IterableShift<T> {
     T next();
     int size();
     void reset();
+    boolean isEmpty();
 }

@@ -9,6 +9,6 @@ package com.gmail.jarmusik.kamil.dicegame2.game.engine.exception;
  *
  * @author Kamil-Tomasz
  */
-public class FailedOperationException extends GameException {
+public class FailedOperationException extends GameActionException {
     
 }
