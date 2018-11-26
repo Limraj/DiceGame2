@@ -6,7 +6,7 @@
 package com.gmail.jarmusik.kamil.dicegame2.game.rule.flow;
 
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameAction;
-import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameActionFactory;
+import static com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.action.GameActionFactory.*;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.result.PlayerResult;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.roll.RollDicesResult;
 import java.math.BigDecimal;
@@ -51,20 +51,20 @@ class GameFlowImpl implements GameFlow {
     public void scheduleIfLostTurn(RollDicesResult result, List<GameAction> schedule) {
         //Jeśli przegra turę dodawana jest maksymalna możliwa liczba punktów za turę;
         schedule.clear();
-        schedule.add(GameActionFactory.addPointsMaxPerTurn(result.getGamePlayer()));
+        schedule.add(addPointsMaxPerTurn(result.getGamePlayer()));
     }
 
     @Override
     public void scheduleIfWonTurn(RollDicesResult result, List<GameAction> schedule) {
         //Jeśli wygra turę dodawana jest wygrana tura;
         schedule.clear();
-        schedule.add(GameActionFactory.incrementWinningTurn(result.getGamePlayer()));
+        schedule.add(incrementWinningTurn(result.getGamePlayer()));
     }
 
     @Override
     public void scheduleIfNotWonAndNotLostTurn(RollDicesResult result, List<GameAction> schedule) {
         //Jeśli nie wygra ani nie przegra tury to dodawane są punkty obiczane według zasady z punktu 4
-        schedule.add(GameActionFactory.addPoints(result.getGamePlayer(), pointsScoredPerRoll(result)));
+        schedule.add(addPoints(result.getGamePlayer(), pointsScoredPerRoll(result)));
     }
 
     @Override

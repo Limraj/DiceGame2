@@ -18,6 +18,7 @@ import java.util.Set;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.GameRules;
 import com.gmail.jarmusik.kamil.dicegame2.game.rule.AccessFlow;
 import com.gmail.jarmusik.kamil.dicegame2.game.engine.schedule.GameActionsScheduler;
+import java.util.Stack;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -50,15 +51,6 @@ class DiceGameEngine implements GameEngine {
         debugMode = false;
         logger.okEngine();
     }
-
-    private GameEngine nextPlayer() {
-        GamePlayer player = playersRegisterShift.next();
-        modifier.incrementTurnFor(player);
-        logger.startStepLog(player, modifier.snapshot());
-        executeStepFor(player);
-        logger.endStepLog(player, modifier.snapshot());
-        return this;
-    }
    
     @Override
     public GameEngine nextTurn() {
@@ -66,7 +58,7 @@ class DiceGameEngine implements GameEngine {
         hasTurnAndIncrementNumberStepCurrentOrThrownException();
         int step = playersRegisterShift.size();
         while(step > 0) {
-            nextPlayer();
+            executeForNextPlayer();
             step--;
         }
         return this;
@@ -94,15 +86,23 @@ class DiceGameEngine implements GameEngine {
         this.debugMode = debugMode;
     }
     
+    private void hasPlayersOrThrownException() {
+        if(playersRegisterShift.isEmpty())
+            throw new NoPlayersException();
+    }
+    
     private void hasTurnAndIncrementNumberStepCurrentOrThrownException() {
         if(!hasTurn())
             throw new NumberOfTurnsHasExceededException();
         numberTurnCurrent++;
     }
     
-    private void hasPlayersOrThrownException() {
-        if(playersRegisterShift.isEmpty())
-            throw new NoPlayersException();
+    private void executeForNextPlayer() {
+        GamePlayer player = playersRegisterShift.next();
+        modifier.incrementTurnFor(player);
+        logger.startStepLog(player, modifier.snapshot());
+        executeStepFor(player);
+        logger.endStepLog(player, modifier.snapshot());
     }
     
     private void executeStepFor(GamePlayer player) {
